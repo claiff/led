@@ -3,9 +3,8 @@
 //
 
 #include "pwm.hpp"
+#include "utils/timings_converter.hpp"
 
-static constexpr uint8_t TOH = 5;
-static constexpr uint8_t T1H = 10;
 static constexpr uint16_t DEFAULT_DELAY = 50;
 
 namespace periphery
@@ -55,7 +54,12 @@ namespace periphery
 
 	void PWM::SetPixel( uint16_t number_pixel, Pixel_t pixel )
 	{
-
+		if(number_pixel > mTimings.size())
+		{
+			return;
+		}
+		auto data = utils::TimingsConverter::Convert(pixel);
+		mTimings[number_pixel] = data;
 	}
 
 	void PWM::DelayTimerEvent()
@@ -121,9 +125,10 @@ namespace periphery
 
 	void PWM::InitRestartTimer( RccHelper& rcc )
 	{
+		//FIXME Сейчас 134us из - за задержки передачи прерывания
 		rcc.SetTimer(TIM2);
-		TIM2->PSC = 36 - 1;
-		TIM2->ARR = DEFAULT_DELAY/2 - 1;
+		TIM2->PSC = 72 - 1;
+		TIM2->ARR = DEFAULT_DELAY - 1;
 		TIM2->DIER |= TIM_DIER_UIE;
 
 		NVIC_EnableIRQ( TIM2_IRQn );

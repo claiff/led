@@ -5,20 +5,13 @@
 #include "led_matrix.hpp"
 
 
-
 namespace device
 {
-	LedMatrix::LedMatrix( uint8_t count_row, uint8_t count_column )
+	LedMatrix::LedMatrix( uint8_t count_row, uint8_t count_column, periphery::PWM const& pwm )
+			: mPwm( pwm )
 	{
-		auto count_elements = count_row * count_column;
-
+		
 	}
-
-	LedMatrix::~LedMatrix()
-	{
-
-	}
-
 //
 // Private methods
 //
