@@ -15,7 +15,10 @@ namespace device
 		~LedMatrix() = default;
 
 	private:
+		uint8_t mWidth;
+		uint8_t mHeight;
 		periphery::PWM mPwm;
+		void FillMatrix( Pixel_t color );
 	};
 }
 
