@@ -31,6 +31,7 @@ set( STARTUP_DIR ${SOURCE_DIR}/startup )
 set( PERIPHERY_DIR ${SOURCE_DIR}/periphery )
 set( DEVICE_DIR ${SOURCE_DIR}/device )
 set( SPECIFIC_DIR ${SOURCE_DIR}/specific )
+set( UTILS_DIR ${SOURCE_DIR}/utils )
 
 set(PROJECT_SOURCES
         ${MAIN_DIR}/main.cpp
@@ -51,6 +52,10 @@ set(PROJECT_SOURCES
         ${SPECIFIC_DIR}/cmsis_compiler.h
         ${SPECIFIC_DIR}/cmsis_gcc.h
         ${SPECIFIC_DIR}/system_stm32f1xx.h
+
+        ${UTILS_DIR}/struct.hpp
+        ${UTILS_DIR}/timings_converter.cpp
+        ${UTILS_DIR}/timings_converter.hpp
 
         ${STARTUP_DIR}/startup_stm32f103c8tx.s
         )

@@ -4,24 +4,18 @@
 
 #pragma once
 
-
-
-#include "specific/stm32f103xb.h"
-#include "periphery/rcc_helper.hpp"
-
-
+#include "periphery/pwm.hpp"
 
 namespace device
 {
 	class LedMatrix
 	{
 	public:
-		LedMatrix( uint8_t count_row, uint8_t count_column);
-		~LedMatrix();
+		LedMatrix( uint8_t count_row, uint8_t count_column, periphery::PWM const& pwm);
+		~LedMatrix() = default;
 
 	private:
-
-
+		periphery::PWM mPwm;
 	};
 }
 
