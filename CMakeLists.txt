@@ -32,6 +32,7 @@ set( PERIPHERY_DIR ${SOURCE_DIR}/periphery )
 set( DEVICE_DIR ${SOURCE_DIR}/device )
 set( SPECIFIC_DIR ${SOURCE_DIR}/specific )
 set( UTILS_DIR ${SOURCE_DIR}/utils )
+set( EFFECTS_DIR ${SOURCE_DIR}/effects )
 
 set(PROJECT_SOURCES
         ${MAIN_DIR}/main.cpp
@@ -58,6 +59,10 @@ set(PROJECT_SOURCES
         ${UTILS_DIR}/struct.hpp
         ${UTILS_DIR}/timings_converter.cpp
         ${UTILS_DIR}/timings_converter.hpp
+
+        ${EFFECTS_DIR}/simple_color.cpp
+        ${EFFECTS_DIR}/simple_color.hpp
+        ${EFFECTS_DIR}/types/ieffect.hpp
 
         ${STARTUP_DIR}/startup_stm32f103c8tx.s
         )
