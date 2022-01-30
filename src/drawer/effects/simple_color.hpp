@@ -4,21 +4,20 @@
 
 #pragma once
 
-#include "types/ieffect.hpp"
+#include "drawer/effects/types/ieffect.hpp"
 #include "utils/struct.hpp"
 
-namespace effect
+namespace drawer::effects
 {
 	class SimpleColor
 			: public types::IEffect
 	{
 	public:
 		explicit SimpleColor( Pixel_t const& color );
-		~SimpleColor() = default;
+		~SimpleColor() override = default;
 
-		void Draw() const override;
+		void Draw( device::LedMatrix& led_matrix ) const override;
 	private:
 		Pixel_t mColor{};
 	};
-
 }

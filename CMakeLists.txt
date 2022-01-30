@@ -32,7 +32,8 @@ set( PERIPHERY_DIR ${SOURCE_DIR}/periphery )
 set( DEVICE_DIR ${SOURCE_DIR}/device )
 set( SPECIFIC_DIR ${SOURCE_DIR}/specific )
 set( UTILS_DIR ${SOURCE_DIR}/utils )
-set( EFFECTS_DIR ${SOURCE_DIR}/effects )
+set( DRAWER_DIR ${SOURCE_DIR}/drawer )
+set( EFFECTS_DIR ${DRAWER_DIR}/effects )
 
 set(PROJECT_SOURCES
         ${MAIN_DIR}/main.cpp
@@ -62,7 +63,16 @@ set(PROJECT_SOURCES
 
         ${EFFECTS_DIR}/simple_color.cpp
         ${EFFECTS_DIR}/simple_color.hpp
+        ${EFFECTS_DIR}/registrator.cpp
+        ${EFFECTS_DIR}/registrator.hpp
+        ${EFFECTS_DIR}/timer_policy.cpp
+        ${EFFECTS_DIR}/timer_policy.hpp
         ${EFFECTS_DIR}/types/ieffect.hpp
+
+        ${DRAWER_DIR}/cyclic.cpp
+        ${DRAWER_DIR}/cyclic.hpp
+        ${DRAWER_DIR}/builder/cyclic.cpp
+        ${DRAWER_DIR}/builder/cyclic.hpp
 
         ${STARTUP_DIR}/startup_stm32f103c8tx.s
         )

@@ -13,14 +13,16 @@ namespace device
 	class LedMatrix
 	{
 	public:
-		LedMatrix( uint8_t count_row, uint8_t count_column, periphery::RccHelper& rcc);
+		LedMatrix( uint8_t count_row, uint8_t count_column, periphery::RccHelper& rcc );
+		LedMatrix( LedMatrix const& other );
 		~LedMatrix();
 
 		void ReDraw();
+		void FillMatrix( Pixel_t const& color );
 
 	private:
 		void BuildPwm( periphery::RccHelper& rcc );
-		void FillMatrix( Pixel_t const& color );
+
 
 		uint8_t mWidth;
 		uint8_t mHeight;

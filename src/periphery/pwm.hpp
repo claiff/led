@@ -15,12 +15,15 @@ namespace periphery
 	{
 	public:
 		PWM( RccHelper& rcc, uint16_t count_element );
+		PWM( PWM const& other );
+		PWM& operator=(PWM const& other);
+		PWM& operator=(PWM* other);
 		~PWM();
 
 		void StartPWM();
 		void StopPWM();
 		void SetDelay( uint8_t time_us );
-		void SetPixel( uint16_t number_pixel, Pixel_t pixel );
+		void SetPixel( uint16_t number_pixel, Pixel_t const& pixel );
 		void DmaFullTransmitEvent();
 	private:
 		void InitPWMTimer( RccHelper& rcc );

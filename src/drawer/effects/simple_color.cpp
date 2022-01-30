@@ -4,7 +4,7 @@
 
 #include "simple_color.hpp"
 
-namespace effect
+namespace drawer::effects
 {
 	//
 	//Constructor
@@ -20,9 +20,9 @@ namespace effect
 	//Public methods
 	//
 
-	void SimpleColor::Draw() const
+	void SimpleColor::Draw( device::LedMatrix& led_matrix ) const
 	{
-
+		led_matrix.FillMatrix(mColor);
 	}
 
 
