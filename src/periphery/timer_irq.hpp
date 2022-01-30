@@ -12,13 +12,13 @@ namespace periphery
 	class TimerIRQ
 	{
 	public:
-		explicit TimerIRQ( periphery::PWM const& pwm);
+		explicit TimerIRQ( periphery::PWM* pwm);
 		~TimerIRQ() = default;
 
-		PWM GetPwm() const;
+		PWM* GetPwm() const;
 		static TimerIRQ* GetInstance();
 	private:
-		PWM mPwm;
+		PWM* mPwm;
 		static TimerIRQ *mInstance;
 	};
 

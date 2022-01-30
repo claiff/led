@@ -21,13 +21,10 @@ namespace periphery
 		void StopPWM();
 		void SetDelay( uint8_t time_us );
 		void SetPixel( uint16_t number_pixel, Pixel_t pixel );
-
-		void DelayTimerEvent();
-
+		void DmaFullTransmitEvent();
 	private:
 		void InitPWMTimer( RccHelper& rcc );
 		void InitDMA( RccHelper& rcc );
-		void InitRestartTimer( RccHelper& rcc );
 		void SetupGPIO( RccHelper& rcc );
 		void InitTimings( uint16_t count_elements );
 		uint16_t GetTimingsSize() const;

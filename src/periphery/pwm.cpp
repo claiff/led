@@ -20,13 +20,12 @@ namespace periphery
 		InitTimings( count_elements + DELAY_ELEMENT );
 		InitPWMTimer( rcc );
 		InitDMA( rcc );
-		InitRestartTimer( rcc );
 	}
 
 	PWM::~PWM()
 	{
 		mTimings.clear();
-		std::destroy(mTimings.begin(), mTimings.end());
+		std::destroy( mTimings.begin(), mTimings.end());
 	}
 
 	//
@@ -42,8 +41,8 @@ namespace periphery
 
 	void PWM::StopPWM()
 	{
-		DMA1_Channel2->CCR &=~ DMA_CCR_EN;
-		TIM1->CR1 &=~ TIM_CR1_CEN;
+		DMA1_Channel2->CCR &= ~DMA_CCR_EN;
+		TIM1->CR1 &= ~TIM_CR1_CEN;
 	}
 
 	void PWM::SetDelay( uint8_t time_us )
@@ -54,23 +53,12 @@ namespace periphery
 
 	void PWM::SetPixel( uint16_t number_pixel, Pixel_t pixel )
 	{
-		if(number_pixel > mTimings.size())
+		if( number_pixel > mTimings.size())
 		{
 			return;
 		}
-		auto data = utils::TimingsConverter::Convert(pixel);
+		auto data = utils::TimingsConverter::Convert( pixel );
 		mTimings[number_pixel] = data;
-	}
-
-	void PWM::DelayTimerEvent()
-	{
-		if((TIM2->CR1 & TIM_CR1_CEN) == TIM_CR1_CEN)
-		{
-			TIM2->CR1 &= ~TIM_CR1_CEN;
-			TIM2->CNT = 0;
-			StartPWM();
-		}
-		TIM2->SR = 0;
 	}
 
 	//
@@ -123,17 +111,6 @@ namespace periphery
 		return mTimings.size() * sizeof( TimingColorFull_t );
 	}
 
-	void PWM::InitRestartTimer( RccHelper& rcc )
-	{
-		//FIXME Сейчас 134us из - за задержки передачи прерывания
-		rcc.SetTimer(TIM2);
-		TIM2->PSC = 72 - 1;
-		TIM2->ARR = DEFAULT_DELAY - 1;
-		TIM2->DIER |= TIM_DIER_UIE;
-
-		NVIC_EnableIRQ( TIM2_IRQn );
-	}
-
 	void PWM::InitTimings( uint16_t count_elements )
 	{
 		mTimings.reserve( count_elements );
@@ -156,5 +133,20 @@ namespace periphery
 		result.red = temp_part;
 
 		return result;
+	}
+
+	void PWM::DmaFullTransmitEvent()
+	{
+		if((DMA1->ISR & DMA_ISR_TCIF2) != DMA_ISR_TCIF2)
+		{
+			return;
+		}
+		TIM1->CR1 &= ~TIM_CR1_CEN;
+		DMA1_Channel2->CCR &= ~DMA_CCR_EN;
+		DMA1->IFCR |= DMA_IFCR_CTCIF2 | DMA_IFCR_CHTIF2;
+		//TIM2->CR1 |= TIM_CR1_CEN;
+		TIM1->CCR1 = 0;
+		TIM1->CNT = 0;
+		TIM1->SR = 0;
 	}
 }

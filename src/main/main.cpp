@@ -1,25 +1,19 @@
 #include "periphery/rcc_helper.hpp"
-#include "periphery/pwm.hpp"
-#include "periphery/timer_irq.hpp"
 #include "device/led_matrix.hpp"
 
-static constexpr uint8_t WIDTH = 16;
-static constexpr uint8_t HEIGHT = 16;
-
-int main( )
+int main()
 {
+	static constexpr uint8_t WIDTH = 2;
+	static constexpr uint8_t HEIGHT = 2;
+
 	periphery::RccHelper rcc;
 	rcc.SetMaxRcc();
 
-	//FIXME Как то объединить
-	periphery::PWM pwm{rcc, WIDTH * HEIGHT};
-	periphery::TimerIRQ irq{pwm};
-	device::LedMatrix led{HEIGHT,WIDTH, pwm};
+	auto led_matrix = device::LedMatrix{HEIGHT, WIDTH, rcc};
 
-	pwm.StartPWM();
-	while(1)
+	led_matrix.ReDraw();
+	while( 1 )
 	{
 
 	}
-	return 0;
 }
