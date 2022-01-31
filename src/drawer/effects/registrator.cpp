@@ -33,7 +33,7 @@ namespace drawer::effects
 		{
 			return nullptr;
 		}
-		if( mPosition > mEffects.size())
+		if( mPosition >= mEffects.size())
 		{
 			mPosition = 0;
 		}

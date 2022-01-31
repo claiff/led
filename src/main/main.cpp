@@ -7,7 +7,7 @@ void FillEffects( drawer::effects::Registrator& registrator );
 
 int main()
 {
-	static constexpr uint16_t TIME_SWITCH_MS = 1000;
+	static constexpr uint16_t TIME_SWITCH_MS = 200;
 
 	periphery::RccHelper rcc;
 	rcc.SetMaxRcc();
@@ -26,13 +26,13 @@ int main()
 
 void FillEffects( drawer::effects::Registrator& registrator )
 {
-	auto red_light = new drawer::effects::SimpleColor{{0xFF, 0x00, 0x00}};
+	auto red_light = new drawer::effects::SimpleColor{{0x10, 0x00, 0x00}};
 	registrator.Add(red_light);
 
-	auto green_light = new drawer::effects::SimpleColor{{0x00, 0xFF, 0x00}};
+	auto green_light = new drawer::effects::SimpleColor{{0x00, 0x10, 0x00}};
 	registrator.Add(green_light);
 
-	auto blue_light = new drawer::effects::SimpleColor{{0x00, 0x00, 0xFF}};
+	auto blue_light = new drawer::effects::SimpleColor{{0x00, 0x00, 0x10}};
 	registrator.Add(blue_light);
 }
 

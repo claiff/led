@@ -78,8 +78,7 @@ namespace periphery
 
 	void PWM::SetPixel( uint16_t number_pixel, Pixel_t const& pixel )
 	{
-		auto size = mTimings.size();
-		if( number_pixel > size )
+		if( number_pixel > mTimings.size() )
 		{
 			return;
 		}

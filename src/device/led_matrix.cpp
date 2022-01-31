@@ -18,11 +18,6 @@ namespace device
 		FillMatrix( DEFAULT_PIXEL );
 	}
 
-	LedMatrix::LedMatrix(  LedMatrix const& other )
-	{
-		mPwm = other.mPwm;
-	}
-
 	LedMatrix::~LedMatrix()
 	{
 		//FIXME Нужно удалять pwm и irq, но отваливается в дальнейшем

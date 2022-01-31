@@ -14,8 +14,8 @@ namespace periphery
 
 	SystemTimerIrq::SystemTimerIrq()
 	{
-		SysTick->LOAD = 72000000UL / 1000 - 1;
-		SysTick->VAL = 72000000UL / 1000 - 1;
+		SysTick->LOAD = 144000000UL / 1000 - 1;
+		SysTick->VAL = 144000000UL / 1000 - 1;
 		SysTick->CTRL = SysTick_CTRL_CLKSOURCE_Msk |
 						SysTick_CTRL_TICKINT_Msk |
 						SysTick_CTRL_ENABLE_Msk;

@@ -14,7 +14,6 @@ namespace device
 	{
 	public:
 		LedMatrix( uint8_t count_row, uint8_t count_column, periphery::RccHelper& rcc );
-		LedMatrix( LedMatrix const& other );
 		~LedMatrix();
 
 		void ReDraw();
