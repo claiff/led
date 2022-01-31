@@ -5,7 +5,7 @@
 #include "timer_policy.hpp"
 #include "periphery/system_timer_irq.hpp"
 
-namespace drawer::effects
+namespace drawer::effects::utils
 {
 	TimerPolicy::TimerPolicy( uint16_t time_ms )
 			: mTimerMs( time_ms )

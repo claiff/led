@@ -6,7 +6,7 @@
 
 #include <cstdint>
 
-namespace drawer::effects
+namespace drawer::effects::utils
 {
 	class TimerPolicy
 	{

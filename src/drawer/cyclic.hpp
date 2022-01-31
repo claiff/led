@@ -4,24 +4,24 @@
 
 #pragma once
 
-#include "effects/registrator.hpp"
+#include "drawer/effects/utils/registrator.hpp"
 #include "device/led_matrix.hpp"
-#include "effects/timer_policy.hpp"
+#include "drawer/effects/utils/timer_policy.hpp"
 
 namespace drawer
 {
 	class Cyclic
 	{
 	public:
-		Cyclic( device::LedMatrix const& led_matrix, effects::Registrator const& effects, effects::TimerPolicy const& timer);
+		Cyclic( device::LedMatrix const& led_matrix, effects::utils::Registrator const& effects, effects::utils::TimerPolicy const& timer);
 		~Cyclic() = default;
 
 		void Draw();
 
 	private:
 		device::LedMatrix mLedMatrix;
-		effects::Registrator mEffects;
-		effects::TimerPolicy mTimer;
+		effects::utils::Registrator mEffects;
+		effects::utils::TimerPolicy mTimer;
 	};
 
 }

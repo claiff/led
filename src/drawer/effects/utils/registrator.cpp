@@ -6,7 +6,7 @@
 
 static constexpr uint8_t EMPTY_POSITION = 0;
 
-namespace drawer::effects
+namespace drawer::effects::utils
 {
 	Registrator::Registrator()
 			: mPosition( EMPTY_POSITION )

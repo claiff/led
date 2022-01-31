@@ -63,11 +63,18 @@ set(PROJECT_SOURCES
 
         ${EFFECTS_DIR}/simple_color.cpp
         ${EFFECTS_DIR}/simple_color.hpp
-        ${EFFECTS_DIR}/registrator.cpp
-        ${EFFECTS_DIR}/registrator.hpp
-        ${EFFECTS_DIR}/timer_policy.cpp
-        ${EFFECTS_DIR}/timer_policy.hpp
+
+        ${EFFECTS_DIR}/utils/registrator.cpp
+        ${EFFECTS_DIR}/utils/registrator.hpp
+        ${EFFECTS_DIR}/utils/timer_policy.cpp
+        ${EFFECTS_DIR}/utils/timer_policy.hpp
+
+        ${EFFECTS_DIR}/decorator/smoth_transition.hpp
+        ${EFFECTS_DIR}/decorator/smoth_transition.cpp
+
         ${EFFECTS_DIR}/types/ieffect.hpp
+        ${EFFECTS_DIR}/types/idecorator.hpp
+        ${EFFECTS_DIR}/types/idecorator.cpp
 
         ${DRAWER_DIR}/cyclic.cpp
         ${DRAWER_DIR}/cyclic.hpp

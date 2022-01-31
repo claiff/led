@@ -17,7 +17,7 @@ namespace drawer::effects
 		~SimpleColor() override = default;
 
 		void Draw( device::LedMatrix& led_matrix ) const override;
-	private:
+	protected:
 		Pixel_t mColor{};
 	};
 }

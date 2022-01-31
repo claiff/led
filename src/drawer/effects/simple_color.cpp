@@ -4,6 +4,7 @@
 
 #include "simple_color.hpp"
 
+
 namespace drawer::effects
 {
 	//
