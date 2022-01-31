@@ -4,7 +4,7 @@
 #pragma once
 
 #include "drawer/cyclic.hpp"
-#include "drawer/effects/registrator.hpp"
+#include "drawer/effects/utils/registrator.hpp"
 
 namespace drawer::builder
 {
@@ -14,7 +14,7 @@ namespace drawer::builder
 		Cyclic() = default;
 		~Cyclic() = default;
 
-		drawer::Cyclic Build( effects::Registrator const& registrator,periphery::RccHelper& rcc, uint16_t time_ms );
+		drawer::Cyclic Build( effects::utils::Registrator const& registrator,periphery::RccHelper& rcc, uint16_t time_ms );
 	};
 
 }

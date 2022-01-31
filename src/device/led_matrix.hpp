@@ -18,6 +18,7 @@ namespace device
 
 		void ReDraw();
 		void FillMatrix( Pixel_t const& color );
+		void FillMatrix( Pixel_t const& color, uint8_t brightness );
 
 	private:
 		void BuildPwm( periphery::RccHelper& rcc );

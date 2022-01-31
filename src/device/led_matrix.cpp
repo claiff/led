@@ -36,6 +36,17 @@ namespace device
 		}
 	}
 
+	void LedMatrix::FillMatrix( Pixel_t const& color, uint8_t brightness )
+	{
+		Pixel_t brightned_color{};
+
+		brightned_color.red = (color.red * brightness) >> 8;
+		brightned_color.green = (color.green * brightness) >> 8;
+		brightned_color.blue = (color.blue * brightness) >> 8;
+
+		FillMatrix(brightned_color);
+	}
+
 //
 // Private methods
 //
@@ -46,6 +57,4 @@ namespace device
 		mPwm = new periphery::PWM{rcc, size};
 		mTimerIrq = new periphery::TimerIRQ{mPwm};
 	}
-
-
 }

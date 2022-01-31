@@ -6,9 +6,9 @@
 
 #include <vector>
 
-#include "types/ieffect.hpp"
+#include "drawer/effects/types/ieffect.hpp"
 
-namespace drawer::effects
+namespace drawer::effects::utils
 {
 	class Registrator
 	{
