@@ -45,6 +45,8 @@ set(PROJECT_SOURCES
         ${PERIPHERY_DIR}/pwm.hpp
         ${PERIPHERY_DIR}/timer_irq.cpp
         ${PERIPHERY_DIR}/timer_irq.hpp
+        ${PERIPHERY_DIR}/system_timer_irq.cpp
+        ${PERIPHERY_DIR}/system_timer_irq.hpp
 
         ${SPECIFIC_DIR}/stm32f103xb.h
         ${SPECIFIC_DIR}/core_cm3.h
