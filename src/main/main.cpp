@@ -3,8 +3,8 @@
 
 int main()
 {
-	static constexpr uint8_t WIDTH = 2;
-	static constexpr uint8_t HEIGHT = 2;
+	static constexpr uint8_t WIDTH = 16;
+	static constexpr uint8_t HEIGHT = 16;
 
 	periphery::RccHelper rcc;
 	rcc.SetMaxRcc();
