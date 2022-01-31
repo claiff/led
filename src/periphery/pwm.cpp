@@ -22,10 +22,35 @@ namespace periphery
 		InitDMA( rcc );
 	}
 
+	PWM::PWM( PWM const& other )
+	{
+		mTimings = other.mTimings;
+	}
+
+	PWM& PWM::operator=( const PWM& other )
+	{
+		auto other_timings = other.mTimings;
+		mTimings.reserve( other_timings.size());
+		std::copy( other_timings.begin(), other_timings.end(), std::back_inserter( mTimings ));
+
+		return *this;
+	}
+
+	PWM& PWM::operator=( PWM* other )
+	{
+		auto other_timings = other->mTimings;
+		mTimings.reserve( other_timings.size());
+		std::copy( other_timings.begin(), other_timings.end(), std::back_inserter( mTimings ));
+
+		return *this;
+	}
+
 	PWM::~PWM()
 	{
 		mTimings.clear();
 		std::destroy( mTimings.begin(), mTimings.end());
+		mTimings.resize( 0 );
+		mTimings.reserve( 0 );
 	}
 
 	//
@@ -51,9 +76,9 @@ namespace periphery
 		TIM2->ARR = time_us;
 	}
 
-	void PWM::SetPixel( uint16_t number_pixel, Pixel_t pixel )
+	void PWM::SetPixel( uint16_t number_pixel, Pixel_t const& pixel )
 	{
-		if( number_pixel > mTimings.size())
+		if( number_pixel > mTimings.size() )
 		{
 			return;
 		}
@@ -149,4 +174,6 @@ namespace periphery
 		TIM1->CNT = 0;
 		TIM1->SR = 0;
 	}
+
+
 }

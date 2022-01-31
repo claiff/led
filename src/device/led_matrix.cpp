@@ -6,7 +6,7 @@
 #include "utils/struct.hpp"
 
 
-static const Pixel_t DEFAULT_PIXEL = {0x01, 0x01, 0x05};
+static const Pixel_t DEFAULT_PIXEL = {0x10, 0x10, 0x10};
 
 namespace device
 {
@@ -20,13 +20,20 @@ namespace device
 
 	LedMatrix::~LedMatrix()
 	{
-		delete mPwm;
-		delete mTimerIrq;
+		//FIXME Нужно удалять pwm и irq, но отваливается в дальнейшем
 	}
 
 	void LedMatrix::ReDraw()
 	{
 		mPwm->StartPWM();
+	}
+
+	void LedMatrix::FillMatrix( Pixel_t const& color )
+	{
+		for( auto i = 0; i < mWidth * mHeight; ++i )
+		{
+			mPwm->SetPixel( i, color );
+		}
 	}
 
 //
@@ -40,12 +47,5 @@ namespace device
 		mTimerIrq = new periphery::TimerIRQ{mPwm};
 	}
 
-	void LedMatrix::FillMatrix( Pixel_t const& color )
-	{
-		for( auto i = 0; i < mWidth * mHeight; ++i )
-		{
-			mPwm->SetPixel( i, color );
-		}
-	}
 
 }

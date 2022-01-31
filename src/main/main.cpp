@@ -1,19 +1,38 @@
 #include "periphery/rcc_helper.hpp"
-#include "device/led_matrix.hpp"
+#include "drawer/effects/registrator.hpp"
+#include "drawer/builder/cyclic.hpp"
+#include "drawer/effects/simple_color.hpp"
+
+void FillEffects( drawer::effects::Registrator& registrator );
 
 int main()
 {
-	static constexpr uint8_t WIDTH = 16;
-	static constexpr uint8_t HEIGHT = 16;
+	static constexpr uint16_t TIME_SWITCH_MS = 200;
 
 	periphery::RccHelper rcc;
 	rcc.SetMaxRcc();
 
-	auto led_matrix = device::LedMatrix{HEIGHT, WIDTH, rcc};
+	auto registrator_effects = drawer::effects::Registrator{};
+	FillEffects( registrator_effects );
 
-	led_matrix.ReDraw();
-	while( 1 )
+	auto cyclic_drawer = drawer::builder::Cyclic{}.Build( registrator_effects, rcc, TIME_SWITCH_MS );
+	cyclic_drawer.Draw();
+
+	while( true )
 	{
 
 	}
 }
+
+void FillEffects( drawer::effects::Registrator& registrator )
+{
+	auto red_light = new drawer::effects::SimpleColor{{0x10, 0x00, 0x00}};
+	registrator.Add(red_light);
+
+	auto green_light = new drawer::effects::SimpleColor{{0x00, 0x10, 0x00}};
+	registrator.Add(green_light);
+
+	auto blue_light = new drawer::effects::SimpleColor{{0x00, 0x00, 0x10}};
+	registrator.Add(blue_light);
+}
+
