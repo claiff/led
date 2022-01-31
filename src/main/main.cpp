@@ -1,7 +1,7 @@
 #include "periphery/rcc_helper.hpp"
 #include "drawer/effects/utils/registrator.hpp"
 #include "drawer/builder/cyclic.hpp"
-#include "drawer/effects/decorator/smoth_transition.hpp"
+#include "drawer/effects/color_gradient.hpp"
 #include "drawer/effects/utils/timer_policy.hpp"
 
 void FillEffects( drawer::effects::utils::Registrator& registrator );
@@ -29,14 +29,7 @@ void FillEffects( drawer::effects::utils::Registrator& registrator )
 {
 	static constexpr uint16_t TIME_SWITCH_MS = 30;
 
-	auto policy = drawer::effects::utils::TimerPolicy{TIME_SWITCH_MS};
-	auto red_light = new drawer::effects::decorator::SmoothTransition{{0x0A, 0x00, 0x00}, policy};
+	auto red_light = new drawer::effects::ColorGradient{{0x20, 0x00, 0x20},{0x00, 0x20, 0x00}, drawer::effects::GradientStyle::Horizontal};
 	registrator.Add(red_light);
-
-	auto green_light = new drawer::effects::decorator::SmoothTransition{{0x00, 0x0A, 0x00}, policy};
-	registrator.Add(green_light);
-
-	auto blue_light = new drawer::effects::decorator::SmoothTransition{{0x00, 0x00, 0x0A}, policy};
-	registrator.Add(blue_light);
 }
 
