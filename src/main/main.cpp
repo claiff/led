@@ -1,14 +1,12 @@
 #include "periphery/rcc_helper.hpp"
-#include "drawer/effects/utils/registrator.hpp"
 #include "drawer/builder/cyclic.hpp"
-#include "drawer/effects/color_gradient.hpp"
-#include "drawer/effects/utils/timer_policy.hpp"
+#include "drawer/effects/random_figure.hpp"
 
 void FillEffects( drawer::effects::utils::Registrator& registrator );
 
 int main()
 {
-	static constexpr uint16_t TIME_SWITCH_MS = 1000;
+	static constexpr uint16_t TIME_SWITCH_MS = 200;
 
 	periphery::RccHelper rcc;
 	rcc.SetMaxRcc();
@@ -27,9 +25,7 @@ int main()
 
 void FillEffects( drawer::effects::utils::Registrator& registrator )
 {
-	static constexpr uint16_t TIME_SWITCH_MS = 30;
-
-	auto red_light = new drawer::effects::ColorGradient{{0x20, 0x00, 0x20},{0x00, 0x20, 0x00}, drawer::effects::GradientStyle::Horizontal};
-	registrator.Add(red_light);
+	auto random_figure = new drawer::effects::RandomFigure{{0x01, 0x00, 0x00}};
+	registrator.Add(random_figure);
 }
 

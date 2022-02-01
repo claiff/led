@@ -13,4 +13,11 @@ namespace drawer::effects::utils
 	{
 
 	}
+
+	Rectangle::Rectangle( Coordinate_t const& position, Coordinate_t const& size )
+			: mPosition( position )
+			, mSize( size )
+	{
+
+	}
 }

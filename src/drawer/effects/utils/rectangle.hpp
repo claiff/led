@@ -6,7 +6,6 @@
 
 #include <cstdint>
 
-
 namespace drawer::effects::utils
 {
 	struct Coordinate_t
@@ -14,10 +13,12 @@ namespace drawer::effects::utils
 		uint8_t x;
 		uint8_t y;
 	};
+
 	class Rectangle
 	{
 	public:
-		Rectangle(uint8_t x, uint8_t y, uint8_t width, uint8_t height);
+		Rectangle( uint8_t x, uint8_t y, uint8_t width, uint8_t height );
+		Rectangle( Coordinate_t const& position, Coordinate_t const& size );
 		~Rectangle() = default;
 
 		Coordinate_t mPosition;
