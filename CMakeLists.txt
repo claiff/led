@@ -49,6 +49,8 @@ set(PROJECT_SOURCES
         ${PERIPHERY_DIR}/timer_irq.hpp
         ${PERIPHERY_DIR}/system_timer_irq.cpp
         ${PERIPHERY_DIR}/system_timer_irq.hpp
+        ${PERIPHERY_DIR}/adc.cpp
+        ${PERIPHERY_DIR}/adc.hpp
 
         ${SPECIFIC_DIR}/stm32f103xb.h
         ${SPECIFIC_DIR}/core_cm3.h
@@ -65,6 +67,8 @@ set(PROJECT_SOURCES
         ${EFFECTS_DIR}/simple_color.hpp
         ${EFFECTS_DIR}/color_gradient.cpp
         ${EFFECTS_DIR}/color_gradient.hpp
+        ${EFFECTS_DIR}/random_figure.cpp
+        ${EFFECTS_DIR}/random_figure.hpp
 
         ${EFFECTS_DIR}/utils/registrator.cpp
         ${EFFECTS_DIR}/utils/registrator.hpp
@@ -72,7 +76,6 @@ set(PROJECT_SOURCES
         ${EFFECTS_DIR}/utils/timer_policy.hpp
         ${EFFECTS_DIR}/utils/rectangle.cpp
         ${EFFECTS_DIR}/utils/rectangle.hpp
-
 
         ${EFFECTS_DIR}/decorator/smoth_transition.hpp
         ${EFFECTS_DIR}/decorator/smoth_transition.cpp
