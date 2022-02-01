@@ -7,6 +7,7 @@
 #include "periphery/pwm.hpp"
 #include "periphery/timer_irq.hpp"
 #include "periphery/rcc_helper.hpp"
+#include "drawer/effects/utils/rectangle.hpp"
 
 namespace device
 {
@@ -20,9 +21,14 @@ namespace device
 		void FillMatrix( Pixel_t const& color );
 		void FillMatrix( Pixel_t const& color, uint8_t brightness );
 
+		void FillRectangle( drawer::effects::utils::Rectangle const& rectangle, Pixel_t const& color );
+
+		uint8_t GetWidth() const;
+		uint8_t GetHeight() const;
+
 	private:
 		void BuildPwm( periphery::RccHelper& rcc );
-
+		void DrawVerticalLine( drawer::effects::utils::Coordinate_t position, uint8_t height, Pixel_t const& color );
 
 		uint8_t mWidth;
 		uint8_t mHeight;

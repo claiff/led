@@ -44,7 +44,31 @@ namespace device
 		brightned_color.green = (color.green * brightness) >> 8;
 		brightned_color.blue = (color.blue * brightness) >> 8;
 
-		FillMatrix(brightned_color);
+		FillMatrix( brightned_color );
+	}
+
+	void LedMatrix::FillRectangle( drawer::effects::utils::Rectangle const& rectangle, Pixel_t const& color )
+	{
+		auto position_x = rectangle.mPosition.x;
+		auto position_y = rectangle.mPosition.y;
+		auto width = rectangle.mSize.x;
+		auto height = rectangle.mSize.y;
+
+		for(uint8_t count_line = 0; count_line < width ; ++count_line)
+		{
+			uint8_t x = position_x + count_line;
+			DrawVerticalLine( {x, position_y}, height, color );
+		}
+	}
+
+	uint8_t LedMatrix::GetWidth() const
+	{
+		return mWidth;
+	}
+
+	uint8_t LedMatrix::GetHeight() const
+	{
+		return mHeight;
 	}
 
 //
@@ -57,4 +81,33 @@ namespace device
 		mPwm = new periphery::PWM{rcc, size};
 		mTimerIrq = new periphery::TimerIRQ{mPwm};
 	}
+
+	void
+	LedMatrix::DrawVerticalLine( drawer::effects::utils::Coordinate_t position, uint8_t height, Pixel_t const& color )
+	{
+		//FIXME Refactor
+		auto position_x = position.x;
+		auto position_y = position.y;
+
+		if((position_x % 2) == 0 )
+		{
+			auto number_led = GetHeight() * position_x + position_y;
+			for( auto y = 0; y < height; ++y )
+			{
+				mPwm->SetPixel( number_led + y, color );
+			}
+		}
+		else
+		{
+			auto number_led = position_x  * GetHeight();
+			number_led += (GetHeight() - position_y) - 1;
+			for( auto y = 0; y < height; ++y )
+			{
+				mPwm->SetPixel( number_led - y, color );
+			}
+		}
+		mPwm->StartPWM();
+	}
+
+
 }
