@@ -25,7 +25,7 @@ int main()
 
 void FillEffects( drawer::effects::utils::Registrator& registrator )
 {
-	auto random_figure = new drawer::effects::RandomFigure{{0x01, 0x00, 0x00}};
+	auto random_figure = new drawer::effects::RandomFigure{};
 	registrator.Add(random_figure);
 }
 
