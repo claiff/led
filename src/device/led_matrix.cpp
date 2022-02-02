@@ -54,11 +54,12 @@ namespace device
 		auto width = rectangle.mSize.x;
 		auto height = rectangle.mSize.y;
 
-		for(uint8_t count_line = 0; count_line < width ; ++count_line)
+		for( uint8_t count_line = 0; count_line < width; ++count_line )
 		{
 			uint8_t x = position_x + count_line;
 			DrawVerticalLine( {x, position_y}, height, color );
 		}
+		mPwm->StartPWM();
 	}
 
 	uint8_t LedMatrix::GetWidth() const
@@ -85,28 +86,29 @@ namespace device
 	void
 	LedMatrix::DrawVerticalLine( drawer::effects::utils::Coordinate_t position, uint8_t height, Pixel_t const& color )
 	{
-		//FIXME Refactor
 		auto position_x = position.x;
 		auto position_y = position.y;
 
-		if((position_x % 2) == 0 )
+		for( auto y = 0; y < height; ++y )
 		{
-			auto number_led = GetHeight() * position_x + position_y;
-			for( auto y = 0; y < height; ++y )
-			{
-				mPwm->SetPixel( number_led + y, color );
-			}
+			DrawPixel( position_x, position_y + y, color );
 		}
-		else
+
+	}
+
+	void LedMatrix::DrawPixel( uint8_t x, uint8_t y, Pixel_t const& color )
+	{
+		//FIXME Refactor
+		uint16_t number_led = 0;
+
+		if((x % 2) == 0 )
 		{
-			auto number_led = position_x  * GetHeight();
-			number_led += (GetHeight() - position_y) - 1;
-			for( auto y = 0; y < height; ++y )
-			{
-				mPwm->SetPixel( number_led - y, color );
-			}
+			number_led = x * GetHeight() + y;
+		} else
+		{
+			number_led = (x + 1) * GetHeight() - y - 1;
 		}
-		mPwm->StartPWM();
+		mPwm->SetPixel( number_led, color );
 	}
 
 

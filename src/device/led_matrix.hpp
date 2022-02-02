@@ -23,6 +23,8 @@ namespace device
 
 		void FillRectangle( drawer::effects::utils::Rectangle const& rectangle, Pixel_t const& color );
 
+		void DrawPixel( uint8_t x, uint8_t y, Pixel_t const& color );
+
 		uint8_t GetWidth() const;
 		uint8_t GetHeight() const;
 
