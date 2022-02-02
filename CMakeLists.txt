@@ -79,6 +79,8 @@ set(PROJECT_SOURCES
 
         ${EFFECTS_DIR}/decorator/smoth_transition.hpp
         ${EFFECTS_DIR}/decorator/smoth_transition.cpp
+        ${EFFECTS_DIR}/decorator/fill_random_figure.hpp
+        ${EFFECTS_DIR}/decorator/fill_random_figure.cpp
 
         ${EFFECTS_DIR}/types/ieffect.hpp
         ${EFFECTS_DIR}/types/idecorator.hpp

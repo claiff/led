@@ -8,16 +8,8 @@
 
 namespace drawer::effects
 {
-	RandomFigure::RandomFigure( Pixel_t const& background_color )
-			: mBackgroundColor( background_color )
-	{
-
-	}
-
 	void RandomFigure::Draw( device::LedMatrix& led_matrix ) const
 	{
-		led_matrix.FillMatrix( mBackgroundColor );
-
 		auto rectangle = GetRandomRectangle();
 		auto color = GetRandomColor();
 
@@ -56,27 +48,14 @@ namespace drawer::effects
 			rectangle.mSize.y++;
 		}
 
-		if( rectangle.mPosition.x + rectangle.mSize.x >= max_width - 1 )
+		if( rectangle.mPosition.x + rectangle.mSize.x >= max_width )
 		{
-			if( rectangle.mSize.x == 1 )
-			{
-				rectangle.mPosition.x--;
-			} else
-			{
-				rectangle.mSize.x = max_width - rectangle.mPosition.x - 1;
-			}
+			rectangle.mSize.x = max_width - rectangle.mPosition.x;
 		}
 
-		if( rectangle.mPosition.y + rectangle.mSize.y >= max_height - 1 )
+		if( rectangle.mPosition.y + rectangle.mSize.y >= max_height )
 		{
-			if( rectangle.mSize.y == 1 )
-			{
-				rectangle.mPosition.y--;
-			}
-			else
-			{
-				rectangle.mSize.y = max_height - rectangle.mPosition.y - 1;
-			}
+			rectangle.mSize.y = max_height - rectangle.mPosition.y;
 		}
 	}
 

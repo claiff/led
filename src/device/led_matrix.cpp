@@ -6,7 +6,7 @@
 #include "utils/struct.hpp"
 
 
-static const Pixel_t DEFAULT_PIXEL = {0x10, 0x10, 0x10};
+static const Pixel_t DEFAULT_PIXEL = {0x05, 0x00, 0x00};
 
 namespace device
 {
