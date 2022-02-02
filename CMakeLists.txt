@@ -67,15 +67,17 @@ set(PROJECT_SOURCES
         ${EFFECTS_DIR}/simple_color.hpp
         ${EFFECTS_DIR}/color_gradient.cpp
         ${EFFECTS_DIR}/color_gradient.hpp
-        ${EFFECTS_DIR}/random_figure.cpp
-        ${EFFECTS_DIR}/random_figure.hpp
+        ${EFFECTS_DIR}/random_rectangle.cpp
+        ${EFFECTS_DIR}/random_rectangle.hpp
+        ${EFFECTS_DIR}/random_circle.cpp
+        ${EFFECTS_DIR}/random_circle.hpp
 
         ${EFFECTS_DIR}/utils/registrator.cpp
         ${EFFECTS_DIR}/utils/registrator.hpp
         ${EFFECTS_DIR}/utils/timer_policy.cpp
         ${EFFECTS_DIR}/utils/timer_policy.hpp
-        ${EFFECTS_DIR}/utils/rectangle.cpp
-        ${EFFECTS_DIR}/utils/rectangle.hpp
+        ${EFFECTS_DIR}/utils/figures.cpp
+        ${EFFECTS_DIR}/utils/figures.hpp
 
         ${EFFECTS_DIR}/decorator/smoth_transition.hpp
         ${EFFECTS_DIR}/decorator/smoth_transition.cpp

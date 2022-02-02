@@ -10,18 +10,12 @@
 
 namespace drawer::effects
 {
-	enum class Figure
-	{
-		Rectangle,
-		Circle
-	};
-
-	class RandomFigure
+	class RandomRectangle
 			: public types::IEffect
 	{
 	public:
-		RandomFigure() = default;
-		~RandomFigure() override = default;
+		RandomRectangle() = default;
+		~RandomRectangle() override = default;
 
 		void Draw( device::LedMatrix& led_matrix ) const override;
 

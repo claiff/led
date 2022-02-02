@@ -4,12 +4,12 @@
 
 #pragma once
 
-#include "drawer/effects/random_figure.hpp"
+#include "drawer/effects/random_rectangle.hpp"
 
 namespace drawer::effects::decorator
 {
 	class FillRandomFigure
-			: public RandomFigure
+			: public RandomRectangle
 	{
 	public:
 		explicit FillRandomFigure( Pixel_t const& background_color );

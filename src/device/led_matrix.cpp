@@ -62,6 +62,15 @@ namespace device
 		mPwm->StartPWM();
 	}
 
+	void LedMatrix::FillCircle( drawer::effects::utils::Circle const& circle, const Pixel_t& color )
+	{
+		auto radius = static_cast<int8_t> (circle.mRadius);
+		for(int8_t x = -radius; x < radius; x++)
+		{
+
+		}
+	}
+
 	uint8_t LedMatrix::GetWidth() const
 	{
 		return mWidth;
@@ -84,7 +93,8 @@ namespace device
 	}
 
 	void
-	LedMatrix::DrawVerticalLine( drawer::effects::utils::Coordinate_t position, uint8_t height, Pixel_t const& color )
+	LedMatrix::DrawVerticalLine( drawer::effects::utils::Coordinate_t position, uint8_t height,
+								 Pixel_t const& color )
 	{
 		auto position_x = position.x;
 		auto position_y = position.y;
@@ -110,6 +120,4 @@ namespace device
 		}
 		mPwm->SetPixel( number_led, color );
 	}
-
-
 }

@@ -7,7 +7,7 @@
 #include "periphery/pwm.hpp"
 #include "periphery/timer_irq.hpp"
 #include "periphery/rcc_helper.hpp"
-#include "drawer/effects/utils/rectangle.hpp"
+#include "drawer/effects/utils/figures.hpp"
 
 namespace device
 {
@@ -22,6 +22,7 @@ namespace device
 		void FillMatrix( Pixel_t const& color, uint8_t brightness );
 
 		void FillRectangle( drawer::effects::utils::Rectangle const& rectangle, Pixel_t const& color );
+		void FillCircle( drawer::effects::utils::Circle const& circle, Pixel_t const& color );
 
 		void DrawPixel( uint8_t x, uint8_t y, Pixel_t const& color );
 
