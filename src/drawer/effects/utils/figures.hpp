@@ -24,4 +24,14 @@ namespace drawer::effects::utils
 		Coordinate_t mPosition;
 		Coordinate_t mSize;
 	};
+
+	class Circle
+	{
+	public:
+		Circle( Coordinate_t const& position, uint8_t radius );
+		~Circle() = default;
+
+		Coordinate_t mPosition;
+		uint8_t mRadius;
+	};
 }

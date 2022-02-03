@@ -2,7 +2,7 @@
 // Created by claiff on 31.01.2022.
 //
 
-#include "rectangle.hpp"
+#include "figures.hpp"
 
 namespace drawer::effects::utils
 {
@@ -17,6 +17,13 @@ namespace drawer::effects::utils
 	Rectangle::Rectangle( Coordinate_t const& position, Coordinate_t const& size )
 			: mPosition( position )
 			, mSize( size )
+	{
+
+	}
+
+	Circle::Circle( Coordinate_t const& position, uint8_t radius )
+			: mPosition( position )
+			, mRadius( radius )
 	{
 
 	}

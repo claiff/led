@@ -17,6 +17,6 @@ namespace drawer::effects::decorator
 	{
 		led_matrix.FillMatrix( mBackgroundColor );
 
-		RandomFigure::Draw( led_matrix );
+		RandomRectangle::Draw( led_matrix );
 	}
 }

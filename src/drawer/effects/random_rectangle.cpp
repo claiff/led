@@ -2,13 +2,13 @@
 // Created by claiff on 01.02.2022.
 //
 
-#include "random_figure.hpp"
-#include "utils/rectangle.hpp"
+#include "random_rectangle.hpp"
+#include "utils/figures.hpp"
 
 
 namespace drawer::effects
 {
-	void RandomFigure::Draw( device::LedMatrix& led_matrix ) const
+	void RandomRectangle::Draw( device::LedMatrix& led_matrix ) const
 	{
 		auto rectangle = GetRandomRectangle();
 		auto color = GetRandomColor();
@@ -19,7 +19,7 @@ namespace drawer::effects
 		led_matrix.FillRectangle( rectangle, color );
 	}
 
-	utils::Rectangle RandomFigure::GetRandomRectangle() const
+	utils::Rectangle RandomRectangle::GetRandomRectangle() const
 	{
 		utils::Coordinate_t position{};
 		utils::Coordinate_t size{};
@@ -34,7 +34,7 @@ namespace drawer::effects
 		return {position, size};
 	}
 
-	void RandomFigure::RestrictRectangle( device::LedMatrix const& led_matrix, utils::Rectangle& rectangle ) const
+	void RandomRectangle::RestrictRectangle( device::LedMatrix const& led_matrix, utils::Rectangle& rectangle ) const
 	{
 		auto max_width = led_matrix.GetWidth();
 		auto max_height = led_matrix.GetHeight();
@@ -59,7 +59,7 @@ namespace drawer::effects
 		}
 	}
 
-	Pixel_t RandomFigure::GetRandomColor() const
+	Pixel_t RandomRectangle::GetRandomColor() const
 	{
 		Pixel_t result;
 
@@ -71,7 +71,7 @@ namespace drawer::effects
 		return result;
 	}
 
-	void RandomFigure::RestrictColor( Pixel_t& color, uint8_t max_color ) const
+	void RandomRectangle::RestrictColor( Pixel_t& color, uint8_t max_color ) const
 	{
 		if( color.red > max_color )
 		{
@@ -90,7 +90,7 @@ namespace drawer::effects
 		}
 	}
 
-	uint16_t RandomFigure::RestrictPartColor( float part_color, uint8_t max_color ) const
+	uint16_t RandomRectangle::RestrictPartColor( float part_color, uint8_t max_color ) const
 	{
 		float result = (part_color / 0xFF) * max_color;
 		return static_cast<uint16_t>(result);

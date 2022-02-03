@@ -2,6 +2,8 @@
 // Created by claiff on 27.01.2022.
 //
 
+#include <cmath>
+
 #include "led_matrix.hpp"
 #include "utils/struct.hpp"
 
@@ -62,6 +64,29 @@ namespace device
 		mPwm->StartPWM();
 	}
 
+	void LedMatrix::FillCircle( drawer::effects::utils::Circle const& circle, const Pixel_t& color )
+	{
+		uint8_t start_x = 4;
+		uint8_t start_y = 4;
+
+		auto radius = static_cast<int8_t> (circle.mRadius);
+		for( uint8_t x = 0; x < radius; ++x )
+		{
+			auto y = sqrt( radius * radius - x * x );
+			uint8_t y_round = round( y );
+
+			uint8_t y_bottom = start_y - y_round;
+			uint8_t height = y_round * 2;
+			uint8_t x_ready = x + start_x;
+			uint8_t x_ready2 = start_x - x;
+
+			DrawVerticalLine( {x_ready, y_bottom}, height, color );
+			DrawVerticalLine( {x_ready2, y_bottom}, height, color );
+		}
+
+		mPwm->StartPWM();
+	}
+
 	uint8_t LedMatrix::GetWidth() const
 	{
 		return mWidth;
@@ -84,7 +109,8 @@ namespace device
 	}
 
 	void
-	LedMatrix::DrawVerticalLine( drawer::effects::utils::Coordinate_t position, uint8_t height, Pixel_t const& color )
+	LedMatrix::DrawVerticalLine( drawer::effects::utils::Coordinate_t position, uint8_t height,
+								 Pixel_t const& color )
 	{
 		auto position_x = position.x;
 		auto position_y = position.y;
@@ -110,6 +136,4 @@ namespace device
 		}
 		mPwm->SetPixel( number_led, color );
 	}
-
-
 }
