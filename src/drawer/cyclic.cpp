@@ -19,9 +19,9 @@ namespace drawer
 	{
 		while(1)
 		{
-			mTimer.SetTime();
 			auto effect = mEffects.Get();
 			effect->Draw(mLedMatrix);
+			mTimer.SetTime();
 			while(!mTimer.IsSwitch());
 		}
 	}
