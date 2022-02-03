@@ -16,7 +16,7 @@ namespace drawer::effects
 		RestrictRectangle( led_matrix, rectangle );
 		RestrictColor( color, 0x35 );
 
-		led_matrix.FillRectangle( rectangle, color );
+		led_matrix.FillRectangle( rectangle, color, mBrightness );
 	}
 
 	utils::Rectangle RandomRectangle::GetRandomRectangle() const
