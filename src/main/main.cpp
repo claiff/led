@@ -6,7 +6,7 @@ void FillEffects( drawer::effects::utils::Registrator& registrator );
 
 int main()
 {
-	static constexpr uint16_t TIME_SWITCH_MS = 200;
+	static constexpr uint16_t TIME_SWITCH_MS = 1000;
 
 	periphery::RccHelper rcc;
 	rcc.SetMaxRcc();
