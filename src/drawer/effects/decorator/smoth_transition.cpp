@@ -21,7 +21,7 @@ namespace drawer::effects::decorator
 	{
 		IncreaseBrightness( led_matrix );
 
-		mBase->Draw(led_matrix);
+		mBase->Draw( led_matrix );
 		WaitColorProcessing( mTimerMain );
 
 		DecreaseBrightness( led_matrix );
@@ -57,8 +57,8 @@ namespace drawer::effects::decorator
 		for( auto number_transition = 0; number_transition < COUNT_TRANSITIONS; ++number_transition )
 		{
 			WaitColorProcessing( mTimerTrans );
-			mBase->SetBrightness(brightness);
-			mBase->Draw(led_matrix);
+			mBase->SetBrightness( brightness );
+			mBase->Draw( led_matrix );
 			is_increase ? (brightness += step) : (brightness -= step);
 			led_matrix.ReDraw();
 		}
@@ -66,8 +66,8 @@ namespace drawer::effects::decorator
 		if( brightness != 0 && !is_increase )
 		{
 			WaitColorProcessing( mTimerTrans );
-			mBase->SetBrightness(0);
-			mBase->Draw(led_matrix);
+			mBase->SetBrightness( 0 );
+			mBase->Draw( led_matrix );
 			led_matrix.ReDraw();
 		}
 	}

@@ -21,7 +21,8 @@ namespace device
 		void FillMatrix( Pixel_t const& color );
 		void FillMatrix( Pixel_t const& color, uint8_t brightness );
 
-		void FillRectangle( drawer::effects::utils::Rectangle const& rectangle, Pixel_t const& color );
+		void FillRectangle( drawer::effects::utils::Rectangle const& rectangle, Pixel_t const& color,
+							uint8_t brightness );
 		void FillCircle( drawer::effects::utils::Circle const& circle, Pixel_t const& color );
 
 		void DrawPixel( uint8_t x, uint8_t y, Pixel_t const& color );
@@ -32,11 +33,13 @@ namespace device
 	private:
 		void BuildPwm( periphery::RccHelper& rcc );
 		void DrawVerticalLine( drawer::effects::utils::Coordinate_t position, uint8_t height, Pixel_t const& color );
+		Pixel_t OnBrightColor(  Pixel_t const& color, uint8_t& brightness ) const;
 
 		uint8_t mWidth;
 		uint8_t mHeight;
 		periphery::PWM* mPwm;
 		periphery::TimerIRQ* mTimerIrq;
+
 
 	};
 }

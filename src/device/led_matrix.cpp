@@ -42,24 +42,24 @@ namespace device
 	{
 		Pixel_t brightned_color{};
 
-		brightned_color.red = (color.red * brightness) >> 8;
-		brightned_color.green = (color.green * brightness) >> 8;
-		brightned_color.blue = (color.blue * brightness) >> 8;
+		brightned_color = OnBrightColor( color, brightness );
 
 		FillMatrix( brightned_color );
 	}
 
-	void LedMatrix::FillRectangle( drawer::effects::utils::Rectangle const& rectangle, Pixel_t const& color )
+	void LedMatrix::FillRectangle( drawer::effects::utils::Rectangle const& rectangle, Pixel_t const& color,
+								   uint8_t brightness )
 	{
 		auto position_x = rectangle.mPosition.x;
 		auto position_y = rectangle.mPosition.y;
 		auto width = rectangle.mSize.x;
 		auto height = rectangle.mSize.y;
+		auto brightned_color = OnBrightColor(color, brightness);
 
 		for( uint8_t count_line = 0; count_line < width; ++count_line )
 		{
 			uint8_t x = position_x + count_line;
-			DrawVerticalLine( {x, position_y}, height, color );
+			DrawVerticalLine( {x, position_y}, height, brightned_color );
 		}
 		mPwm->StartPWM();
 	}
@@ -101,6 +101,16 @@ namespace device
 // Private methods
 //
 
+	Pixel_t LedMatrix::OnBrightColor(  Pixel_t const& color, uint8_t& brightness ) const
+	{
+		Pixel_t result;
+		result.red = (color.red * brightness) >> 8;
+		result.green = (color.green * brightness) >> 8;
+		result.blue = (color.blue * brightness) >> 8;
+
+		return result;
+	}
+
 	void LedMatrix::BuildPwm( periphery::RccHelper& rcc )
 	{
 		uint16_t size = mWidth * mHeight;
@@ -109,8 +119,7 @@ namespace device
 	}
 
 	void
-	LedMatrix::DrawVerticalLine( drawer::effects::utils::Coordinate_t position, uint8_t height,
-								 Pixel_t const& color )
+	LedMatrix::DrawVerticalLine( drawer::effects::utils::Coordinate_t position, uint8_t height, Pixel_t const& color )
 	{
 		auto position_x = position.x;
 		auto position_y = position.y;

@@ -32,7 +32,8 @@ namespace drawer::effects
 			for( auto color_number = 0; color_number < count_transitions; ++color_number )
 			{
 				uint8_t x = color_number * step_width_rectangle;
-				led_matrix.FillRectangle( {x, 0, step_width_rectangle, height}, start_color);
+				drawer::effects::utils::Rectangle rectangle = {x, 0, step_width_rectangle, height};
+				led_matrix.FillRectangle( rectangle, start_color, mBrightness );
 				MixColor( start_color, color_mixer );
 			}
 		}
