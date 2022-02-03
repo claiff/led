@@ -9,9 +9,11 @@ static constexpr uint8_t COUNT_TRANSITIONS = 10;
 namespace drawer::effects::decorator
 {
 
-	SmoothTransition::SmoothTransition( Pixel_t const& color, utils::TimerPolicy const& timer )
+	SmoothTransition::SmoothTransition( Pixel_t const& color, utils::TimerPolicy const& timer_main,
+										utils::TimerPolicy const& timer_trans )
 			: SimpleColor( color )
-			, mTimer( timer )
+			, mTimerMain( timer_main )
+			, mTimerTrans( timer_trans )
 	{
 
 	}
@@ -20,7 +22,8 @@ namespace drawer::effects::decorator
 	{
 		IncreaseBrightness( led_matrix );
 		SimpleColor::Draw( led_matrix );
-		//DecreaseBrightness( led_matrix );
+		WaitColorProcessing(mTimerMain);
+		DecreaseBrightness( led_matrix );
 	}
 
 	void SmoothTransition::IncreaseBrightness( device::LedMatrix& led_matrix ) const
@@ -52,21 +55,23 @@ namespace drawer::effects::decorator
 	{
 		for( auto number_transition = 0; number_transition < COUNT_TRANSITIONS; ++number_transition )
 		{
-			mTimer.SetTime();
-			while( !mTimer.IsSwitch());
+			WaitColorProcessing( mTimerTrans );
 			led_matrix.FillMatrix( mColor, brightness );
 			is_increase ? (brightness += step) : (brightness -= step);
 			led_matrix.ReDraw();
 		}
 		//FIXME костыль при уменьшении яркости, яркость в 0 может не упасть
-		if(brightness != 0  && !is_increase)
+		if( brightness != 0 && !is_increase )
 		{
-			mTimer.SetTime();
-			while( !mTimer.IsSwitch());
+			WaitColorProcessing( mTimerTrans );
 			led_matrix.FillMatrix( mColor, 0 );
 			led_matrix.ReDraw();
 		}
 	}
 
-
+	void SmoothTransition::WaitColorProcessing( utils::TimerPolicy& timer ) const
+	{
+		timer.SetTime();
+		while( !timer.IsSwitch());
+	}
 }
