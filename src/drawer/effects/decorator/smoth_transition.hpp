@@ -6,15 +6,16 @@
 
 #include "drawer/effects/simple_color.hpp"
 #include "drawer/effects/utils/timer_policy.hpp"
+#include "drawer/effects/types/idecorator.hpp"
 
 namespace drawer::effects::decorator
 {
 	class SmoothTransition
-			: public SimpleColor
+			: public types::IDecorator<types::IEffect>
 	{
 	public:
-		explicit SmoothTransition( Pixel_t const& color, utils::TimerPolicy const& timer_main,
-								   utils::TimerPolicy const& timer_trans );
+		SmoothTransition( utils::TimerPolicy const& timer_main,
+						  utils::TimerPolicy const& timer_trans );
 		~SmoothTransition() override = default;
 
 		void Draw( device::LedMatrix& led_matrix ) const override;
