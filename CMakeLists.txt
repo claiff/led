@@ -85,8 +85,8 @@ set(PROJECT_SOURCES
         ${EFFECTS_DIR}/decorator/fill_random_figure.cpp
 
         ${EFFECTS_DIR}/types/ieffect.hpp
+        ${EFFECTS_DIR}/types/ieffect.cpp
         ${EFFECTS_DIR}/types/idecorator.hpp
-        ${EFFECTS_DIR}/types/idecorator.cpp
 
         ${DRAWER_DIR}/cyclic.cpp
         ${DRAWER_DIR}/cyclic.hpp

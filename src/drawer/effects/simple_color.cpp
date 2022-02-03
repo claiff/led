@@ -23,9 +23,8 @@ namespace drawer::effects
 
 	void SimpleColor::Draw( device::LedMatrix& led_matrix ) const
 	{
-		led_matrix.FillMatrix(mColor);
+		led_matrix.FillMatrix(mColor, mBrightness);
 		led_matrix.ReDraw();
 	}
-
 
 }

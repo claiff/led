@@ -1,9 +1,13 @@
 #include "periphery/rcc_helper.hpp"
 #include "drawer/builder/cyclic.hpp"
 #include "drawer/effects/decorator/smoth_transition.hpp"
+#include "drawer/effects/simple_color.hpp"
 #include "drawer/effects/utils/timer_policy.hpp"
+#include <memory>
 
 void FillEffects( drawer::effects::utils::Registrator& registrator );
+
+drawer::effects::types::IEffectPtr GetColorEffect( Pixel_t const& color );
 
 int main()
 {
@@ -26,20 +30,19 @@ int main()
 
 void FillEffects( drawer::effects::utils::Registrator& registrator )
 {
-	drawer::effects::utils::TimerPolicy timer_policy_main{500};
+	registrator.Add( GetColorEffect( {0x0A, 0x00, 0x00} ) );
+	registrator.Add( GetColorEffect( {0x00, 0x0A, 0x00} ) );
+	registrator.Add( GetColorEffect( {0x00, 0x00, 0x0A} ) );
+}
 
+drawer::effects::types::IEffectPtr GetColorEffect( Pixel_t const& color )
+{
+	drawer::effects::utils::TimerPolicy timer_policy_main{500};
 	drawer::effects::utils::TimerPolicy timer_policy_trans{20};
 
-	auto smooth_color_red = new drawer::effects::decorator::SmoothTransition{{0x0A, 0x00, 0x00}, timer_policy_main,
-																		 timer_policy_trans};
-
-	auto smooth_color_green = new drawer::effects::decorator::SmoothTransition{{0x00, 0x0A, 0x00}, timer_policy_main,
-																			 timer_policy_trans};
-
-	auto smooth_color_blue = new drawer::effects::decorator::SmoothTransition{{0x00, 0x00, 0x0A}, timer_policy_main,
-																			 timer_policy_trans};
-	registrator.Add( smooth_color_red );
-	registrator.Add( smooth_color_green );
-	registrator.Add( smooth_color_blue );
+	auto smooth_transition = new drawer::effects::decorator::SmoothTransition{timer_policy_main, timer_policy_trans};
+	auto simple_color = std::make_shared <drawer::effects::SimpleColor>(color);
+	smooth_transition->Apply(simple_color);
+	return smooth_transition;
 }
 
