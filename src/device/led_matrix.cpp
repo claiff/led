@@ -54,7 +54,7 @@ namespace device
 		auto position_y = rectangle.mPosition.y;
 		auto width = rectangle.mSize.x;
 		auto height = rectangle.mSize.y;
-		auto brightned_color = OnBrightColor(color, brightness);
+		auto brightned_color = OnBrightColor( color, brightness );
 
 		for( uint8_t count_line = 0; count_line < width; ++count_line )
 		{
@@ -101,7 +101,7 @@ namespace device
 // Private methods
 //
 
-	Pixel_t LedMatrix::OnBrightColor(  Pixel_t const& color, uint8_t& brightness ) const
+	Pixel_t LedMatrix::OnBrightColor( Pixel_t const& color, uint8_t brightness ) const
 	{
 		Pixel_t result;
 		result.red = (color.red * brightness) >> 8;
@@ -139,10 +139,49 @@ namespace device
 		if((x % 2) == 0 )
 		{
 			number_led = x * GetHeight() + y;
-		} else
+		}
+		else
 		{
 			number_led = (x + 1) * GetHeight() - y - 1;
 		}
 		mPwm->SetPixel( number_led, color );
+	}
+
+	void LedMatrix::FillHorizontalLine( drawer::effects::utils::Coordinate_t position, Pixel_t const& line_color,
+										uint8_t width )
+	{
+		auto position_x = position.x;
+		auto position_y = position.y;
+
+		for( auto x = 0; x < width; ++x )
+		{
+			DrawPixel( position_x + x, position_y, line_color );
+		}
+	}
+
+	void
+	LedMatrix::FillOnBrightHorizontalLine( drawer::effects::utils::Coordinate_t position, const Pixel_t& line_color,
+										   uint8_t width )
+	{
+		static constexpr int BRIGHTNESS = 40;
+
+		auto position_x = position.x;
+		auto position_y = position.y;
+		auto bright_color = OnBrightColor( line_color, BRIGHTNESS );
+
+//		if( position_x != 0 )
+//		{
+//			DrawPixel( position_x - 1, position_y, bright_color);
+//		}
+
+		for( auto x = 0; x < width; ++x )
+		{
+			DrawPixel( position_x + x, position_y, line_color );
+		}
+		auto full_width = position_x + width;
+//		if( full_width != mWidth )
+//		{
+//			DrawPixel( full_width, position_y, bright_color );
+//		}
 	}
 }

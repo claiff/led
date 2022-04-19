@@ -6,7 +6,7 @@ cmake_minimum_required(VERSION 3.19)
 # specify cross compilers and tools
 set(CMAKE_C_COMPILER arm-none-eabi-gcc)
 set(CMAKE_CXX_COMPILER arm-none-eabi-g++)
-set(CMAKE_ASM_COMPILER  arm-none-eabi-gcc)
+set(CMAKE_ASM_COMPILER arm-none-eabi-gcc)
 set(CMAKE_AR arm-none-eabi-ar)
 set(CMAKE_OBJCOPY arm-none-eabi-objcopy)
 set(CMAKE_OBJDUMP arm-none-eabi-objdump)
@@ -21,19 +21,20 @@ set(CMAKE_C_STANDARD 11)
 add_compile_options(-mcpu=cortex-m3 -mthumb -mthumb-interwork)
 add_compile_options(-ffunction-sections -fdata-sections -fno-common -fmessage-length=0)
 
-add_compile_options( -Og )
+add_compile_options(-Og)
 
-set( DEFAULT_HEADERS 17 )
+set(DEFAULT_HEADERS 17)
 
-set( SOURCE_DIR src )
-set( MAIN_DIR ${SOURCE_DIR}/main )
-set( STARTUP_DIR ${SOURCE_DIR}/startup )
-set( PERIPHERY_DIR ${SOURCE_DIR}/periphery )
-set( DEVICE_DIR ${SOURCE_DIR}/device )
-set( SPECIFIC_DIR ${SOURCE_DIR}/specific )
-set( UTILS_DIR ${SOURCE_DIR}/utils )
-set( DRAWER_DIR ${SOURCE_DIR}/drawer )
-set( EFFECTS_DIR ${DRAWER_DIR}/effects )
+set(SOURCE_DIR src)
+set(MAIN_DIR ${SOURCE_DIR}/main)
+set(STARTUP_DIR ${SOURCE_DIR}/startup)
+set(PERIPHERY_DIR ${SOURCE_DIR}/periphery)
+set(DEVICE_DIR ${SOURCE_DIR}/device)
+set(SPECIFIC_DIR ${SOURCE_DIR}/specific)
+set(UTILS_DIR ${SOURCE_DIR}/utils)
+set(DRAWER_DIR ${SOURCE_DIR}/drawer)
+set(EFFECTS_DIR ${DRAWER_DIR}/effects)
+set(FIGURES_DIR ${DRAWER_DIR}/figure)
 
 set(PROJECT_SOURCES
         ${MAIN_DIR}/main.cpp
@@ -93,15 +94,19 @@ set(PROJECT_SOURCES
         ${DRAWER_DIR}/builder/cyclic.cpp
         ${DRAWER_DIR}/builder/cyclic.hpp
 
-        ${STARTUP_DIR}/startup_stm32f103c8tx.s
-        )
+        ${FIGURES_DIR}/circle_one.cpp
+        ${FIGURES_DIR}/circle_one.hpp
 
-include_directories( ${SOURCE_DIR} )
+        ${FIGURES_DIR}/types/ifigure.hpp
+
+        ${STARTUP_DIR}/startup_stm32f103c8tx.s)
+
+include_directories(${SOURCE_DIR})
 
 set(LINKER_SCRIPT ${CMAKE_SOURCE_DIR}/STM32F103C8TX_FLASH.ld)
 
-add_link_options( -Wl,-gc-sections,--print-memory-usage,-Map=${PROJECT_BINARY_DIR}/${PROJECT_NAME}.map )
-add_link_options( -mcpu=cortex-m3 -mthumb -mthumb-interwork )
-add_link_options( -T ${LINKER_SCRIPT} )
-add_link_options( -specs=nosys.specs -specs=nano.specs -T ${LINKER_SCRIPT} )
-add_executable( ${PROJECT_NAME}.elf ${PROJECT_SOURCES} ${LINKER_SCRIPT} )
+add_link_options(-Wl,-gc-sections,--print-memory-usage,-Map=${PROJECT_BINARY_DIR}/${PROJECT_NAME}.map)
+add_link_options(-mcpu=cortex-m3 -mthumb -mthumb-interwork)
+add_link_options(-T ${LINKER_SCRIPT})
+add_link_options(-specs=nosys.specs -specs=nano.specs -T ${LINKER_SCRIPT})
+add_executable(${PROJECT_NAME}.elf ${PROJECT_SOURCES} ${LINKER_SCRIPT})

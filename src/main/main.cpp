@@ -4,6 +4,7 @@
 #include "drawer/effects/decorator/fill_random_figure.hpp"
 #include "drawer/effects/utils/timer_policy.hpp"
 #include <memory>
+#include "drawer/figure/circle.hpp"
 
 void FillEffects( drawer::effects::utils::Registrator& registrator );
 
@@ -16,11 +17,17 @@ int main()
 	periphery::RccHelper rcc;
 	rcc.SetMaxRcc();
 
-	auto registrator_effects = drawer::effects::utils::Registrator{};
-	FillEffects( registrator_effects );
+	Pixel_t red = {0x10, 0x00, 0x00};
+	Pixel_t green = {0x00, 0x10, 0x00};
+	Pixel_t blue = {0x00, 0x00, 0x10};
 
-	auto cyclic_drawer = drawer::builder::Cyclic{}.Build( registrator_effects, rcc, TIME_SWITCH_MS );
-	cyclic_drawer.Draw();
+	auto led_matrix = device::LedMatrix{16, 16, rcc};
+	led_matrix.FillMatrix( blue );
+	led_matrix.ReDraw();
+
+	drawer::figure::Circle circle{{5,    5},
+								  {0x00, 100, 0x00}};
+	circle.Draw(led_matrix);
 
 	while( true )
 	{
@@ -45,7 +52,7 @@ drawer::effects::types::IEffectPtr GetColorEffect( Pixel_t const& color_start, P
 	drawer::effects::utils::TimerPolicy timer_policy_trans{20};
 
 	auto smooth_transition = new drawer::effects::decorator::SmoothTransition{timer_policy_main, timer_policy_trans};
-	auto color_gradient = std::make_shared < drawer::effects::decorator::FillRandomFigure >(color_start);
+	auto color_gradient = std::make_shared < drawer::effects::decorator::FillRandomFigure >( color_start );
 	smooth_transition->Apply( color_gradient );
 	return smooth_transition;
 }

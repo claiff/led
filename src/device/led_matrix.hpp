@@ -30,10 +30,15 @@ namespace device
 		uint8_t GetWidth() const;
 		uint8_t GetHeight() const;
 
+		void FillHorizontalLine( drawer::effects::utils::Coordinate_t position, const Pixel_t& line_color,
+								 uint8_t width );
+		void FillOnBrightHorizontalLine( drawer::effects::utils::Coordinate_t position, const Pixel_t& line_color,
+										 uint8_t width );
+
 	private:
 		void BuildPwm( periphery::RccHelper& rcc );
 		void DrawVerticalLine( drawer::effects::utils::Coordinate_t position, uint8_t height, Pixel_t const& color );
-		Pixel_t OnBrightColor(  Pixel_t const& color, uint8_t& brightness ) const;
+		Pixel_t OnBrightColor( Pixel_t const& color, uint8_t brightness ) const;
 
 		uint8_t mWidth;
 		uint8_t mHeight;
