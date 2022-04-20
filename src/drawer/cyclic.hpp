@@ -14,7 +14,7 @@ namespace drawer
 	{
 	public:
 		Cyclic( device::LedMatrix const& led_matrix,
-				effects::utils::Registrator < effects::types::IEffect > const& effects,
+				effects::utils::Registrator < effects::types::IEffect* > const& effects,
 				effects::utils::TimerPolicy const& timer );
 		~Cyclic() = default;
 
@@ -22,7 +22,7 @@ namespace drawer
 
 	private:
 		device::LedMatrix mLedMatrix;
-		effects::utils::Registrator < effects::types::IEffect > mEffects;
+		effects::utils::Registrator < effects::types::IEffect* > mEffects;
 		effects::utils::TimerPolicy mTimer;
 	};
 

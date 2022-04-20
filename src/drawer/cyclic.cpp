@@ -7,7 +7,7 @@
 namespace drawer
 {
 	Cyclic::Cyclic( device::LedMatrix const& led_matrix,
-					effects::utils::Registrator < effects::types::IEffect > const& effects,
+					effects::utils::Registrator < effects::types::IEffect* > const& effects,
 					effects::utils::TimerPolicy const& timer )
 			: mLedMatrix( led_matrix )
 			, mEffects( effects )

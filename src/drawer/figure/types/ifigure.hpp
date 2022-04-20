@@ -21,7 +21,6 @@ namespace drawer::figure::types
 			y += other.y;
 		}
 	};
-
 	using Vector = struct Vector;
 
 	struct Color
@@ -32,18 +31,28 @@ namespace drawer::figure::types
 	};
 	using Color = struct Color;
 
+	enum class OutSide
+	{
+		NONE,
+		RIGHT,
+		DOWN,
+		LEFT,
+		UP
+	};
+
 	class IFigure
 	{
 	public:
 		virtual ~IFigure() = default;
 
 		virtual void SetPosition( Vector const& position ) = 0;
+
 		virtual void Move( Vector const& position ) = 0;
 		virtual void SetColor( Color const& color ) = 0;
 		virtual void Draw( device::LedMatrix& led_matrix ) = 0;
 		virtual void ResetPositionX() = 0;
 		virtual void ResetPositionY() = 0;
-		[[nodiscard]] virtual bool IsFigureOut() const = 0;
+		[[nodiscard]] virtual OutSide IsFigureOut( device::LedMatrix const& led_matrix ) const = 0;
 	};
 
 	using IFigurePtr = IFigure*;

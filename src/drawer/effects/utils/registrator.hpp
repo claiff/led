@@ -22,23 +22,19 @@ namespace drawer::effects::utils
 		};
 		~Registrator()
 		{
-			for(auto effect : mEffects)
-			{
-				delete effect;
-			}
 			mEffects.clear();
 		}
 
-		void Add( T* const& effect )
+		void Add( T const& effect )
 		{
 			mEffects.push_back( effect );
 		}
 
-		T* Get()
+		T& Get()
 		{
 			if( mEffects.empty())
 			{
-				return nullptr;
+				//return {};
 			}
 			if( mPosition >= mEffects.size())
 			{
@@ -47,23 +43,13 @@ namespace drawer::effects::utils
 			return mEffects[mPosition++];
 		}
 
-		auto Begin() noexcept
-		{
-			return *mEffects.begin();
-		}
-
-		auto End() noexcept
-		{
-			return *mEffects.end();
-		}
-
 		[[nodiscard]] size_t Size() const
 		{
 			return mEffects.size();
 		}
 
 	private:
-		std::vector < T* > mEffects;
+		std::vector < T > mEffects;
 		uint8_t mPosition;
 	};
 

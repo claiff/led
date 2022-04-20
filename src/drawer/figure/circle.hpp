@@ -15,21 +15,21 @@ namespace drawer::figure
 	{
 	public:
 		explicit Circle( types::Vector const& position, uint8_t size,
-						 types::Color const& color );
+						 types::Color color );
 		~Circle() override = default;
 
 		void SetPosition( types::Vector const& position ) override;
 		void SetColor( types::Color const& color ) override;
 		void Draw( device::LedMatrix& led_matrix ) override;
 		void Move( const types::Vector& position ) override;
-		[[nodiscard]] bool IsFigureOut() const override;
-		virtual void ResetPositionX() override;
-		virtual void ResetPositionY() override;
+		[[nodiscard]] types::OutSide IsFigureOut( device::LedMatrix const& led_matrix ) const override;
+		void ResetPositionX() override;
+		void ResetPositionY() override;
 	private:
 		void DrawUpCircle( device::LedMatrix& led_matrix ) const;
 		void DrawDownCircle( device::LedMatrix& led_matrix ) const;
-		[[nodiscard]] bool IsXOut() const;
-		[[nodiscard]] bool IsYOut() const;
+		[[nodiscard]] types::OutSide IsXOut( device::LedMatrix const& led_matrix ) const;
+		[[nodiscard]] types::OutSide IsYOut( device::LedMatrix const& led_matrix ) const;
 
 		types::Vector mPosition;
 		uint8_t mSize;

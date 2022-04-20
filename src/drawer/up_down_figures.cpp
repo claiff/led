@@ -6,8 +6,10 @@
 
 namespace drawer
 {
-	UpDownFigures::UpDownFigures( effects::utils::Registrator < EffectType > const& registrator )
-			: mRegistrator( registrator )
+	UpDownFigures::UpDownFigures( device::LedMatrix const& led_matrix,
+								  effects::utils::Registrator < EffectType > const& registrator )
+			: mLedMatrix( led_matrix )
+			, mRegistrator( registrator )
 	{
 		auto registrator_size = mRegistrator.Size();
 		mState.reserve( registrator_size );
@@ -37,27 +39,35 @@ namespace drawer
 		}
 	}
 
-	void UpDownFigures::SetTimer( EffectType* effect, State& state )
+	void UpDownFigures::SetTimer( EffectType effect, State& state )
 	{
-		effect->delay.SetTime();
+		effect.delay.SetTime();
 		state = State::DELAY;
 	}
 
-	void UpDownFigures::ApplyDelay( EffectType* effect, State& state )
+	void UpDownFigures::ApplyDelay( EffectType effect, State& state )
 	{
-		if( !effect->delay.IsSwitch())
+		if( !effect.delay.IsSwitch())
 		{
 			return;
 		}
 		state = State::DURATION;
 	}
 
-	void UpDownFigures::ApplyDuration( EffectType* effect, State& state )
+	void UpDownFigures::ApplyDuration( EffectType effect, State& state )
 	{
-		if( !effect->duration.IsSwitch())
+		static const figure::types::Vector DEFAULT_SPEED = {0, 1};
+
+		if( !effect.duration.IsSwitch())
 		{
 			return;
 		}
-		effect->figure->Move( {0, effect->speed} );
+		auto figure = effect.figure;
+		IsFigureOnBottom( figure ) ? figure->ResetPositionY() : figure->Move( DEFAULT_SPEED );
+	}
+
+	bool UpDownFigures::IsFigureOnBottom( const figure::types::IFigure* figure ) const
+	{
+		return figure->IsFigureOut( mLedMatrix ) == figure::types::OutSide::DOWN;
 	}
 }

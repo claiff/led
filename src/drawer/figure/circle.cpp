@@ -9,13 +9,17 @@ namespace drawer::figure
 	static constexpr uint8_t MAX_SIZE_CIRCLE = 3;
 
 	Circle::Circle( types::Vector const& position, uint8_t size,
-					types::Color const& color )
+					types::Color color )
 			: mPosition( position )
 			, mSize((size < MAX_SIZE_CIRCLE) ? size : MAX_SIZE_CIRCLE )
 			, mColor( color )
 	{
 
 	}
+
+	//
+	//Public methods
+	//
 
 	void Circle::SetPosition( types::Vector const& position )
 	{
@@ -34,6 +38,39 @@ namespace drawer::figure
 		DrawDownCircle( led_matrix );
 	}
 
+	void Circle::Move( types::Vector const& position )
+	{
+		mPosition += position;
+	}
+
+	types::OutSide Circle::IsFigureOut( device::LedMatrix const& led_matrix ) const
+	{
+		auto is_x_out = IsXOut( led_matrix );
+		if( is_x_out != types::OutSide::NONE )
+		{
+			return is_x_out;
+		}
+		auto is_y_out = IsYOut( led_matrix );
+		if( is_y_out != types::OutSide::NONE )
+		{
+			return is_y_out;
+		}
+		return types::OutSide::NONE;
+	}
+
+	void Circle::ResetPositionX()
+	{
+		mPosition.x = -mSize;
+	}
+
+	void Circle::ResetPositionY()
+	{
+		mPosition.y = -mSize;
+	}
+
+	//
+	//Private methods
+	//
 
 	void Circle::DrawUpCircle( device::LedMatrix& led_matrix ) const
 	{
@@ -65,33 +102,29 @@ namespace drawer::figure
 		}
 	}
 
-	void Circle::Move( types::Vector const& position )
+	types::OutSide Circle::IsYOut( device::LedMatrix const& led_matrix ) const
 	{
-		mPosition += position;
+		if( mPosition.y + mSize <= 0 )
+		{
+			return types::OutSide::UP;
+		}
+		else if( mPosition.y + mSize > led_matrix.GetWidth())
+		{
+			return types::OutSide::DOWN;
+		}
+		return types::OutSide::NONE;
 	}
 
-	bool Circle::IsFigureOut() const
+	types::OutSide Circle::IsXOut( device::LedMatrix const& led_matrix ) const
 	{
-		return IsXOut() && IsYOut();
-	}
-
-	bool Circle::IsYOut() const
-	{
-		return mPosition.y + mSize <= 0;
-	}
-
-	bool Circle::IsXOut() const
-	{
-		return mPosition.x + mSize <= 0;
-	}
-
-	void Circle::ResetPositionX()
-	{
-		mPosition.x = -mSize;
-	}
-
-	void Circle::ResetPositionY()
-	{
-		mPosition.y = -mSize;
+		if( mPosition.x + mSize <= 0 )
+		{
+			return types::OutSide::LEFT;
+		}
+		else if( mPosition.x + mSize > led_matrix.GetHeight())
+		{
+			return types::OutSide::RIGHT;
+		}
+		return types::OutSide::NONE;
 	}
 }
