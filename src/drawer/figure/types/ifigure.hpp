@@ -10,12 +10,19 @@
 
 namespace drawer::figure::types
 {
-	struct Position
+	struct Vector
 	{
-		uint8_t x;
-		uint8_t y;
+		int8_t x;
+		int8_t y;
+
+		void operator+=( Vector const& other )
+		{
+			x += other.x;
+			y += other.y;
+		}
 	};
-	using Position = struct Position;
+
+	using Vector = struct Vector;
 
 	struct Color
 	{
@@ -30,10 +37,11 @@ namespace drawer::figure::types
 	public:
 		virtual ~IFigure() = default;
 
-		virtual void SetPosition( Position const& position ) = 0;
-		virtual void Move( Position const& position ) = 0;
+		virtual void SetPosition( Vector const& position ) = 0;
+		virtual void Move( Vector const& position ) = 0;
 		virtual void SetColor( Color const& color ) = 0;
 		virtual void Draw( device::LedMatrix& led_matrix ) = 0;
+		[[nodiscard]] virtual bool IsFigureOut() const = 0;
 	};
 
 	using IFigurePtr = IFigure*;

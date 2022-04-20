@@ -131,10 +131,14 @@ namespace device
 
 	}
 
-	void LedMatrix::DrawPixel( uint8_t x, uint8_t y, Pixel_t const& color )
+	void LedMatrix::DrawPixel( int8_t x, int8_t y, Pixel_t const& color )
 	{
 		//FIXME Refactor
 		uint16_t number_led = 0;
+		if(x < 0 || y < 0)
+		{
+			return;
+		}
 
 		if((x % 2) == 0 )
 		{
@@ -153,7 +157,7 @@ namespace device
 		auto position_x = position.x;
 		auto position_y = position.y;
 
-		for( auto x = 0; x < width; ++x )
+		for( uint8_t x = 0; x < width; ++x )
 		{
 			DrawPixel( position_x + x, position_y, line_color );
 		}
