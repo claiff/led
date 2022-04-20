@@ -13,14 +13,16 @@ namespace drawer
 	class Cyclic
 	{
 	public:
-		Cyclic( device::LedMatrix const& led_matrix, effects::utils::Registrator const& effects, effects::utils::TimerPolicy const& timer);
+		Cyclic( device::LedMatrix const& led_matrix,
+				effects::utils::Registrator < effects::types::IEffect > const& effects,
+				effects::utils::TimerPolicy const& timer );
 		~Cyclic() = default;
 
 		void Draw();
 
 	private:
 		device::LedMatrix mLedMatrix;
-		effects::utils::Registrator mEffects;
+		effects::utils::Registrator < effects::types::IEffect > mEffects;
 		effects::utils::TimerPolicy mTimer;
 	};
 

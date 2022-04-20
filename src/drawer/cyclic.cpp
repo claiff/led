@@ -6,7 +6,8 @@
 
 namespace drawer
 {
-	Cyclic::Cyclic( device::LedMatrix const& led_matrix, effects::utils::Registrator const& effects,
+	Cyclic::Cyclic( device::LedMatrix const& led_matrix,
+					effects::utils::Registrator < effects::types::IEffect > const& effects,
 					effects::utils::TimerPolicy const& timer )
 			: mLedMatrix( led_matrix )
 			, mEffects( effects )
@@ -17,12 +18,12 @@ namespace drawer
 
 	void Cyclic::Draw()
 	{
-		while(1)
+		while( 1 )
 		{
 			auto effect = mEffects.Get();
-			effect->Draw(mLedMatrix);
+			effect->Draw( mLedMatrix );
 			mTimer.SetTime();
-			while(!mTimer.IsSwitch());
+			while( !mTimer.IsSwitch());
 		}
 	}
 }

@@ -73,7 +73,6 @@ set(PROJECT_SOURCES
         ${EFFECTS_DIR}/random_circle.cpp
         ${EFFECTS_DIR}/random_circle.hpp
 
-        ${EFFECTS_DIR}/utils/registrator.cpp
         ${EFFECTS_DIR}/utils/registrator.hpp
         ${EFFECTS_DIR}/utils/timer_policy.cpp
         ${EFFECTS_DIR}/utils/timer_policy.hpp
@@ -94,16 +93,22 @@ set(PROJECT_SOURCES
         ${DRAWER_DIR}/builder/cyclic.cpp
         ${DRAWER_DIR}/builder/cyclic.hpp
 
-        ${FIGURES_DIR}/circle_one.cpp
-        ${FIGURES_DIR}/circle_one.hpp
+        ${FIGURES_DIR}/circle.cpp
+        ${FIGURES_DIR}/circle.hpp
 
         ${FIGURES_DIR}/types/ifigure.hpp
+
+        src/drawer/effects/up_down_figure.cpp
+        src/drawer/effects/up_down_figure.hpp
+        src/drawer/up_down_figures.cpp
+        src/drawer/up_down_figures.hpp
+        src/drawer/types/idrawer.hpp
 
         ${STARTUP_DIR}/startup_stm32f103c8tx.s)
 
 include_directories(${SOURCE_DIR})
 
-set(LINKER_SCRIPT ${CMAKE_SOURCE_DIR}/STM32F103C8TX_FLASH.ld)
+set(LINKER_SCRIPT ${CMAKE_SOURCE_DIR}/STM32F103C8TX_FLASH.ld  )
 
 add_link_options(-Wl,-gc-sections,--print-memory-usage,-Map=${PROJECT_BINARY_DIR}/${PROJECT_NAME}.map)
 add_link_options(-mcpu=cortex-m3 -mthumb -mthumb-interwork)

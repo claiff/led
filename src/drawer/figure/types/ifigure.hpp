@@ -31,6 +31,7 @@ namespace drawer::figure::types
 		virtual ~IFigure() = default;
 
 		virtual void SetPosition( Position const& position ) = 0;
+		virtual void Move( Position const& position ) = 0;
 		virtual void SetColor( Color const& color ) = 0;
 		virtual void Draw( device::LedMatrix& led_matrix ) = 0;
 	};
