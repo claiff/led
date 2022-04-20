@@ -25,7 +25,7 @@ namespace device
 							uint8_t brightness );
 		void FillCircle( drawer::effects::utils::Circle const& circle, Pixel_t const& color );
 
-		void DrawPixel( uint8_t x, uint8_t y, Pixel_t const& color );
+		void DrawPixel( int8_t x, int8_t y, Pixel_t const& color );
 
 		uint8_t GetWidth() const;
 		uint8_t GetHeight() const;
