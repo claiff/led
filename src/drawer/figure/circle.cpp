@@ -84,4 +84,14 @@ namespace drawer::figure
 	{
 		return mPosition.x + mSize <= 0;
 	}
+
+	void Circle::ResetPositionX()
+	{
+		mPosition.x = -mSize;
+	}
+
+	void Circle::ResetPositionY()
+	{
+		mPosition.y = -mSize;
+	}
 }

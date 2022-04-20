@@ -41,6 +41,8 @@ namespace drawer::figure::types
 		virtual void Move( Vector const& position ) = 0;
 		virtual void SetColor( Color const& color ) = 0;
 		virtual void Draw( device::LedMatrix& led_matrix ) = 0;
+		virtual void ResetPositionX() = 0;
+		virtual void ResetPositionY() = 0;
 		[[nodiscard]] virtual bool IsFigureOut() const = 0;
 	};
 

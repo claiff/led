@@ -23,6 +23,8 @@ namespace drawer::figure
 		void Draw( device::LedMatrix& led_matrix ) override;
 		void Move( const types::Vector& position ) override;
 		[[nodiscard]] bool IsFigureOut() const override;
+		virtual void ResetPositionX() override;
+		virtual void ResetPositionY() override;
 	private:
 		void DrawUpCircle( device::LedMatrix& led_matrix ) const;
 		void DrawDownCircle( device::LedMatrix& led_matrix ) const;
