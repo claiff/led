@@ -16,15 +16,31 @@ int main()
 
 	auto led_matrix = device::LedMatrix{16, 16, rcc};
 	led_matrix.FillMatrix( blue );
-	led_matrix.ReDraw();
 
-	drawer::figure::Circle circle{{5, 5}, 2,
+	drawer::figure::Circle circle{{2, -2}, 3,
 								  {0x00, 100, 0x00}};
 	circle.Draw( led_matrix );
+	led_matrix.ReDraw();
+	volatile auto result = circle.IsFigureOut();
 
+	circle.Move({0,5});
+	led_matrix.FillMatrix( blue );
+	circle.Draw(led_matrix);
+	led_matrix.ReDraw();
+
+	led_matrix.FillMatrix( blue );
+	circle.ResetPositionY();
+	circle.Draw(led_matrix);
+	led_matrix.ReDraw();
+
+	result = circle.IsFigureOut();
+
+	led_matrix.FillMatrix( blue );
+	circle.Move({0,1});
+	circle.Draw(led_matrix);
+	led_matrix.ReDraw();
 	while( true )
 	{
-
 	}
 }
 

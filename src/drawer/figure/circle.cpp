@@ -29,39 +29,27 @@ namespace drawer::figure
 
 	void Circle::Draw( device::LedMatrix& led_matrix )
 	{
+		int8_t init_width = 2 * (mSize - 1) + 1;
+		Pixel_t line_color{mColor.red, mColor.green, mColor.blue};
+		effects::utils::Coordinate_t position{mPosition.x, mPosition.y};
 		//TODO FIX please it
-		DrawUpCircle( led_matrix );
-		DrawDownCircle( led_matrix );
-	}
-
-
-	void Circle::DrawUpCircle( device::LedMatrix& led_matrix ) const
-	{
-		Pixel_t line_color{mColor.red, mColor.green, mColor.blue};
-		effects::utils::Coordinate_t position{mPosition.x, mPosition.y};
-
-		position.y -= mSize;
-		for( uint8_t i = 0; i <= mSize; ++i )
+		for( uint8_t i = 0; i < mSize; ++i )
 		{
-			led_matrix.FillHorizontalLine( position, line_color, 2 * i + 1 );
-			led_matrix.ReDraw();
-			position.y++;
-			position.x--;
+			DrawLines( led_matrix, line_color, position, i );
 		}
+		led_matrix.ReDraw();
 	}
 
-	void Circle::DrawDownCircle( device::LedMatrix& led_matrix ) const
+	void Circle::DrawLines( device::LedMatrix& led_matrix, const Pixel_t& line_color,
+							const effects::utils::Coordinate_t& position, uint8_t line ) const
 	{
-		Pixel_t line_color{mColor.red, mColor.green, mColor.blue};
-		effects::utils::Coordinate_t position{mPosition.x, mPosition.y};
-
-		position.x++;
-		for( uint8_t i = mSize - 1; i >= 0; --i )
+		for( uint8_t j = 0; j < mSize - line; ++j )
 		{
-			position.x++;
-			led_matrix.FillHorizontalLine( position, line_color, 2 * i + 1 );
-			led_matrix.ReDraw();
-			position.y++;
+			led_matrix.DrawPixel( position.x - j, position.y + line, line_color );
+			led_matrix.DrawPixel( position.x + j, position.y + line, line_color );
+
+			led_matrix.DrawPixel( position.x - j, position.y - line, line_color );
+			led_matrix.DrawPixel( position.x + j, position.y - line, line_color );
 		}
 	}
 

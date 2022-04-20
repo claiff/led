@@ -23,11 +23,9 @@ namespace drawer::figure
 		void Draw( device::LedMatrix& led_matrix ) override;
 		void Move( const types::Vector& position ) override;
 		[[nodiscard]] bool IsFigureOut() const override;
-		virtual void ResetPositionX() override;
-		virtual void ResetPositionY() override;
+		void ResetPositionX() override;
+		void ResetPositionY() override;
 	private:
-		void DrawUpCircle( device::LedMatrix& led_matrix ) const;
-		void DrawDownCircle( device::LedMatrix& led_matrix ) const;
 		[[nodiscard]] bool IsXOut() const;
 		[[nodiscard]] bool IsYOut() const;
 
@@ -35,5 +33,8 @@ namespace drawer::figure
 		uint8_t mSize;
 		types::Color mColor;
 
+		void DrawLines( device::LedMatrix& led_matrix, const Pixel_t& line_color,
+						const effects::utils::Coordinate_t& position,
+						uint8_t line ) const;
 	};
 }
