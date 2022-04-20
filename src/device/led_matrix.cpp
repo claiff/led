@@ -7,7 +7,8 @@
 #include "led_matrix.hpp"
 #include "utils/struct.hpp"
 
-
+//TODO Нужно сохранять цвет фона, для очистки его
+//TODO Нужно уметь заливать не только цвета но и градиент
 static const Pixel_t DEFAULT_PIXEL = {0x05, 0x00, 0x00};
 
 namespace device

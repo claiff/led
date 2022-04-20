@@ -21,6 +21,7 @@ int main()
 
 	auto led_matrix = device::LedMatrix{16, 16, rcc};
 	led_matrix.FillMatrix( blue );
+
 	led_matrix.ReDraw();
 
 	auto registrator = GetRegistrator();

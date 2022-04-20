@@ -35,5 +35,8 @@ namespace drawer::figure
 		uint8_t mSize;
 		types::Color mColor;
 
+		void DrawLines( device::LedMatrix& led_matrix, const Pixel_t& line_color,
+						const effects::utils::Coordinate_t& position,
+						uint8_t line ) const;
 	};
 }
