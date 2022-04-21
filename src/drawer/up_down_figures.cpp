@@ -12,16 +12,37 @@ namespace drawer
 			: mBackground( background )
 			, mLedMatrix( led_matrix )
 			, mRegistrator( registrator )
+			, mRedrawLed{60}
+	{
+		InitStates();
+
+		Pixel_t color{mBackground.red, mBackground.green, mBackground.blue};
+		mLedMatrix.FillMatrix( color );
+		mRedrawLed.SetTime();
+	}
+
+	//
+	//Public methods
+	//
+
+	void UpDownFigures::ReDraw()
+	{
+		ApplyOnState();
+		ApplyRedrawLed();
+	}
+
+	//
+	//Private methods
+	//
+
+	void UpDownFigures::InitStates()
 	{
 		auto registrator_size = mRegistrator.Size();
 		mState.reserve( registrator_size );
 		mState.resize( registrator_size, State::NOT_SET_TIME );
-		Pixel_t color{mBackground.red, mBackground.green, mBackground.blue};
-		mLedMatrix.FillMatrix( color );
-		mLedMatrix.ReDraw();
 	}
 
-	void UpDownFigures::ReDraw()
+	void UpDownFigures::ApplyOnState()
 	{
 		for( auto i = 0; i < mRegistrator.Size(); ++i )
 		{
@@ -43,13 +64,22 @@ namespace drawer
 		}
 	}
 
-	void UpDownFigures::SetDelayState( EffectType& effect, State& state )
+	void UpDownFigures::ApplyRedrawLed()
+	{
+		if( mRedrawLed.IsSwitch())
+		{
+			mLedMatrix.ReDraw();
+			mRedrawLed.SetTime();
+		}
+	}
+
+	void UpDownFigures::SetDelayState( EffectType& effect, State& state ) const
 	{
 		effect.delay.SetTime();
 		state = State::DELAY;
 	}
 
-	void UpDownFigures::ApplyDelay( EffectType& effect, State& state )
+	void UpDownFigures::ApplyDelay( EffectType& effect, State& state ) const
 	{
 		if( !effect.delay.IsSwitch())
 		{
@@ -71,17 +101,15 @@ namespace drawer
 		{
 			return;
 		}
-		auto& figure = effect.figure;
-		if( IsFigureOnBottom( figure ))
-		{
-			figure->ResetPositionY();
-		}
-		else
-		{
-			MoveFigure( figure );
-		}
+		ApplyFigure( effect );
 
 		duration_policy.SetTime();
+	}
+
+	void UpDownFigures::ApplyFigure(  UpDownFigures::EffectType const& effect )
+	{
+		auto& figure = effect.figure;
+		IsFigureOnBottom( figure ) ? figure->ResetPositionY() : MoveFigure( figure );
 	}
 
 	bool UpDownFigures::IsFigureOnBottom( const figure::types::IFigure* figure ) const
@@ -94,9 +122,17 @@ namespace drawer
 		static const figure::types::Vector DEFAULT_SPEED = {0, 1};
 
 		figure->Move( DEFAULT_SPEED );
+		ReDrawFigures();
+	}
+
+	void UpDownFigures::ReDrawFigures()
+	{
 		Pixel_t color{mBackground.red, mBackground.green, mBackground.blue};
 		mLedMatrix.FillMatrix( color );
-		figure->Draw( mLedMatrix );
-		mLedMatrix.ReDraw();
+
+		for( auto it = mRegistrator.Begin(); it < mRegistrator.End(); ++it )
+		{
+			(*it).figure->Draw( mLedMatrix );
+		}
 	}
 }

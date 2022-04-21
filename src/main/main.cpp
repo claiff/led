@@ -21,9 +21,6 @@ int main()
 	Pixel_t blue = {0x00, 0x00, 0x10};
 
 	auto led_matrix = device::LedMatrix{16, 16, rcc};
-	//led_matrix.FillMatrix( blue );
-
-	//led_matrix.ReDraw();
 
 	auto registrator = GetRegistrator();
 	drawer::UpDownFigures up_down{ {0x00, 0x00, 0x10}, led_matrix, registrator};
@@ -37,12 +34,15 @@ int main()
 Registrator_t GetRegistrator()
 {
 	Registrator_t result;
-	drawer::figure::types::Color blue = {0x00, 0x10, 0x00};
+	drawer::figure::types::Color green = {0x00, 0x10, 0x00};
 	drawer::figure::types::Color red = {0x10, 0x00, 0x00};
+
 	//TODO Время умножено на 2
-	auto effect = GetEffect( 500, 100, 3, blue, {5,0} );
+	auto effect = GetEffect( 300, 500, 3, green, {5, 0} );
 	result.Add( effect );
-	effect = GetEffect( 200, 100, 2, red, {9,0}  );
+	effect = GetEffect( 500, 50, 2, red, {9,0}  );
+	result.Add( effect );
+	effect = GetEffect( 500, 100, 1, red, {13,0}  );
 	result.Add( effect );
 	return result;
 }
