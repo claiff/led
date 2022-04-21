@@ -43,6 +43,16 @@ namespace drawer::effects::utils
 			return mEffects[mPosition++];
 		}
 
+		auto Begin()
+		{
+			return mEffects.begin();
+		}
+
+		auto End()
+		{
+			return mEffects.end();
+		}
+
 		[[nodiscard]] size_t Size() const
 		{
 			return mEffects.size();
