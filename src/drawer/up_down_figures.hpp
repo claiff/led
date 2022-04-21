@@ -13,7 +13,6 @@ namespace drawer
 {
 
 
-
 	enum class State
 	{
 		NOT_SET_TIME,
@@ -33,16 +32,20 @@ namespace drawer
 		};
 		using EffectType = struct EffectType;
 
-		UpDownFigures( device::LedMatrix const& led_matrix,effects::utils::Registrator < EffectType > const& registrator );
+		UpDownFigures(  figure::types::Color const& background, device::LedMatrix const& led_matrix,
+					   effects::utils::Registrator < EffectType > const& registrator );
 		~UpDownFigures() override = default;
 
 		void ReDraw() override;
 	private:
-		void SetTimer( EffectType effect, State& state );
-		void ApplyDelay( EffectType effect, State& state );
-		void ApplyDuration( EffectType effect, State& state );
-		bool IsFigureOnBottom( const figure::types::IFigure* figure ) const;
+		void SetDelayState( EffectType& effect, State& state );
+		void ApplyDelay( EffectType& effect, State& state );
+		void ApplyDuration( EffectType& effect, State& state );
+		bool IsFigureOnBottom( figure::types::IFigure const* figure ) const;
+		void SetDurationState( EffectType& effect, State& state ) const;
+		void MoveFigure( figure::types::IFigurePtr const& figure );
 
+		figure::types::Color mBackground;
 		effects::utils::Registrator < EffectType > mRegistrator;
 		std::vector < State > mState;
 		device::LedMatrix mLedMatrix;

@@ -6,26 +6,30 @@
 
 namespace drawer
 {
-	UpDownFigures::UpDownFigures( device::LedMatrix const& led_matrix,
+	UpDownFigures::UpDownFigures( figure::types::Color const& background,
+								  device::LedMatrix const& led_matrix,
 								  effects::utils::Registrator < EffectType > const& registrator )
-			: mLedMatrix( led_matrix )
+			: mBackground( background )
+			, mLedMatrix( led_matrix )
 			, mRegistrator( registrator )
 	{
 		auto registrator_size = mRegistrator.Size();
 		mState.reserve( registrator_size );
 		mState.resize( registrator_size, State::NOT_SET_TIME );
-
+		Pixel_t color{mBackground.red, mBackground.green, mBackground.blue};
+		mLedMatrix.FillMatrix( color );
+		mLedMatrix.ReDraw();
 	}
 
 	void UpDownFigures::ReDraw()
 	{
 		for( auto i = 0; i < mRegistrator.Size(); ++i )
 		{
-			auto effect = mRegistrator.Get();
+			auto& effect = mRegistrator.Get();
 			switch( mState[i] )
 			{
 				case State::NOT_SET_TIME:
-					SetTimer( effect, mState[i] );
+					SetDelayState( effect, mState[i] );
 					break;
 				case State::DELAY:
 					ApplyDelay( effect, mState[i] );
@@ -39,35 +43,60 @@ namespace drawer
 		}
 	}
 
-	void UpDownFigures::SetTimer( EffectType effect, State& state )
+	void UpDownFigures::SetDelayState( EffectType& effect, State& state )
 	{
 		effect.delay.SetTime();
 		state = State::DELAY;
 	}
 
-	void UpDownFigures::ApplyDelay( EffectType effect, State& state )
+	void UpDownFigures::ApplyDelay( EffectType& effect, State& state )
 	{
 		if( !effect.delay.IsSwitch())
 		{
 			return;
 		}
-		state = State::DURATION;
+		SetDurationState( effect, state );
 	}
 
-	void UpDownFigures::ApplyDuration( EffectType effect, State& state )
+	void UpDownFigures::SetDurationState( EffectType& effect, State& state ) const
 	{
-		static const figure::types::Vector DEFAULT_SPEED = {0, 1};
+		state = State::DURATION;
+		effect.duration.SetTime();
+	}
 
-		if( !effect.duration.IsSwitch())
+	void UpDownFigures::ApplyDuration( EffectType& effect, State& state )
+	{
+		auto& duration_policy = effect.duration;
+		if( !duration_policy.IsSwitch())
 		{
 			return;
 		}
-		auto figure = effect.figure;
-		IsFigureOnBottom( figure ) ? figure->ResetPositionY() : figure->Move( DEFAULT_SPEED );
+		auto& figure = effect.figure;
+		if( IsFigureOnBottom( figure ))
+		{
+			figure->ResetPositionY();
+		}
+		else
+		{
+			MoveFigure( figure );
+		}
+
+		duration_policy.SetTime();
 	}
 
 	bool UpDownFigures::IsFigureOnBottom( const figure::types::IFigure* figure ) const
 	{
 		return figure->IsFigureOut( mLedMatrix ) == figure::types::OutSide::DOWN;
+	}
+
+	void UpDownFigures::MoveFigure( figure::types::IFigurePtr const& figure )
+	{
+		static const figure::types::Vector DEFAULT_SPEED = {0, 1};
+
+		figure->Move( DEFAULT_SPEED );
+		Pixel_t color{mBackground.red, mBackground.green, mBackground.blue};
+		mLedMatrix.FillMatrix( color );
+		figure->Draw( mLedMatrix );
+		mLedMatrix.ReDraw();
 	}
 }

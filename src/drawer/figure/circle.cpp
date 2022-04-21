@@ -33,7 +33,6 @@ namespace drawer::figure
 
 	void Circle::Draw( device::LedMatrix& led_matrix )
 	{
-		int8_t init_width = 2 * (mSize - 1) + 1;
 		Pixel_t line_color{mColor.red, mColor.green, mColor.blue};
 		effects::utils::Coordinate_t position{mPosition.x, mPosition.y};
 		//TODO FIX please it
@@ -41,7 +40,36 @@ namespace drawer::figure
 		{
 			DrawLines( led_matrix, line_color, position, i );
 		}
-		led_matrix.ReDraw();
+	}
+
+	void Circle::Move( types::Vector const& position )
+	{
+		mPosition += position;
+	}
+
+	types::OutSide Circle::IsFigureOut( device::LedMatrix const& led_matrix ) const
+	{
+		auto is_x_out = IsXOut( led_matrix );
+		if( is_x_out != types::OutSide::NONE )
+		{
+			return is_x_out;
+		}
+		auto is_y_out = IsYOut( led_matrix );
+		if( is_y_out != types::OutSide::NONE )
+		{
+			return is_y_out;
+		}
+		return types::OutSide::NONE;
+	}
+
+	void Circle::ResetPositionX()
+	{
+		mPosition.x = -mSize;
+	}
+
+	void Circle::ResetPositionY()
+	{
+		mPosition.y = -mSize;
 	}
 
 	void Circle::DrawLines( device::LedMatrix& led_matrix, const Pixel_t& line_color,
@@ -59,11 +87,12 @@ namespace drawer::figure
 
 	types::OutSide Circle::IsYOut( device::LedMatrix const& led_matrix ) const
 	{
-		if( mPosition.y + mSize <= 0 )
+		auto circle_height = mSize - 1;
+		if( mPosition.y + circle_height <= 0 )
 		{
 			return types::OutSide::UP;
 		}
-		else if( mPosition.y + mSize > led_matrix.GetWidth())
+		else if( mPosition.y >= led_matrix.GetHeight() + circle_height  )
 		{
 			return types::OutSide::DOWN;
 		}
@@ -72,11 +101,12 @@ namespace drawer::figure
 
 	types::OutSide Circle::IsXOut( device::LedMatrix const& led_matrix ) const
 	{
-		if( mPosition.x + mSize <= 0 )
+		auto circle_width = 2 * mSize - 1;
+		if( mPosition.x + circle_width <= 0 )
 		{
 			return types::OutSide::LEFT;
 		}
-		else if( mPosition.x + mSize > led_matrix.GetHeight())
+		else if( mPosition.x > led_matrix.GetWidth() + circle_width  )
 		{
 			return types::OutSide::RIGHT;
 		}

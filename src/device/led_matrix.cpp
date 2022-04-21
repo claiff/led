@@ -136,7 +136,7 @@ namespace device
 	{
 		//FIXME Refactor
 		uint16_t number_led = 0;
-		if(x < 0 || y < 0)
+		if( x < 0 || y < 0 || x >= mWidth || y >= mHeight )
 		{
 			return;
 		}
