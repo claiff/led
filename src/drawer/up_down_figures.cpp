@@ -6,7 +6,7 @@
 
 namespace drawer
 {
-	UpDownFigures::UpDownFigures( figure::types::Color const& background,
+	UpDownFigures::UpDownFigures( utils::Color const& background,
 								  device::LedMatrix const& led_matrix,
 								  effects::utils::Registrator < EffectType > const& registrator )
 			: mBackground( background )
@@ -16,8 +16,6 @@ namespace drawer
 	{
 		InitStates();
 
-		Pixel_t color{mBackground.red, mBackground.green, mBackground.blue};
-		mLedMatrix.FillMatrix( color );
 		mRedrawLed.SetTime();
 	}
 
@@ -119,7 +117,7 @@ namespace drawer
 
 	void UpDownFigures::MoveFigure( figure::types::IFigurePtr const& figure )
 	{
-		static const figure::types::Vector DEFAULT_SPEED = {0, 1};
+		static const utils::Vector DEFAULT_SPEED = {0, 1};
 
 		figure->Move( DEFAULT_SPEED );
 		ReDrawFigures();
@@ -127,8 +125,7 @@ namespace drawer
 
 	void UpDownFigures::ReDrawFigures()
 	{
-		Pixel_t color{mBackground.red, mBackground.green, mBackground.blue};
-		mLedMatrix.FillMatrix( color );
+		mLedMatrix.FillMatrix( mBackground );
 
 		for( auto it = mRegistrator.Begin(); it < mRegistrator.End(); ++it )
 		{

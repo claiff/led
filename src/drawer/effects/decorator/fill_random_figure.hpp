@@ -12,11 +12,11 @@ namespace drawer::effects::decorator
 			: public RandomRectangle
 	{
 	public:
-		explicit FillRandomFigure( Pixel_t const& background_color );
+		explicit FillRandomFigure( ::utils::Color const& background_color );
 		~FillRandomFigure() override = default;
 
 		void Draw( device::LedMatrix& led_matrix ) const override;
 	private:
-		Pixel_t mBackgroundColor;
+		::utils::Color mBackgroundColor;
 	};
 }

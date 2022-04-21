@@ -9,16 +9,16 @@ using Registrator_t = drawer::effects::utils::Registrator < drawer::UpDownFigure
 
 Registrator_t GetRegistrator();
 drawer::UpDownFigures::EffectType
-GetEffect( uint16_t time_delay, uint16_t time_duration, uint8_t size, drawer::figure::types::Color const& color, drawer::figure::types::Vector const& position );
+GetEffect( uint16_t time_delay, uint16_t time_duration, uint8_t size, utils::Color const& color, utils::Vector const& position );
 
 int main()
 {
 	periphery::RccHelper rcc;
 	rcc.SetMaxRcc();
 
-	Pixel_t red = {0x10, 0x00, 0x00};
-	Pixel_t green = {0x00, 0x10, 0x00};
-	Pixel_t blue = {0x00, 0x00, 0x10};
+	utils::Color red = {0x10, 0x00, 0x00};
+	utils::Color green = {0x00, 0x10, 0x00};
+	utils::Color blue = {0x00, 0x00, 0x10};
 
 	auto led_matrix = device::LedMatrix{16, 16, rcc};
 
@@ -34,8 +34,8 @@ int main()
 Registrator_t GetRegistrator()
 {
 	Registrator_t result;
-	drawer::figure::types::Color green = {0x00, 0x10, 0x00};
-	drawer::figure::types::Color red = {0x10, 0x00, 0x00};
+	utils::Color green = {0x00, 0x10, 0x00};
+	utils::Color red = {0x10, 0x00, 0x00};
 
 	//TODO Время умножено на 2
 	auto effect = GetEffect( 300, 500, 3, green, {5, 0} );
@@ -48,7 +48,7 @@ Registrator_t GetRegistrator()
 }
 
 drawer::UpDownFigures::EffectType
-GetEffect( uint16_t time_delay, uint16_t time_duration, uint8_t size, drawer::figure::types::Color const& color, drawer::figure::types::Vector const& position )
+GetEffect( uint16_t time_delay, uint16_t time_duration, uint8_t size, utils::Color const& color, utils::Vector const& position )
 {
 	using namespace drawer::effects::utils;
 

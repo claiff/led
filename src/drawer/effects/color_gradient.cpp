@@ -8,7 +8,8 @@ static constexpr uint8_t DEFAULT_COUNT_TRANSITIONS = 16;
 
 namespace drawer::effects
 {
-	ColorGradient::ColorGradient( Pixel_t const& pixel_start, Pixel_t const& pixel_end, GradientStyle gradient_style )
+	ColorGradient::ColorGradient( ::utils::Color const& pixel_start, ::utils::Color const& pixel_end,
+								  GradientStyle gradient_style )
 			: mPixelStart( pixel_start )
 			, mPixelEnd( pixel_end )
 			, mGradientStyle( gradient_style )
@@ -50,7 +51,7 @@ namespace drawer::effects
 		return result;
 	}
 
-	void ColorGradient::MixColor( Pixel_t& color, PixelMixer_t const& mix_color ) const
+	void ColorGradient::MixColor( ::utils::Color& color, PixelMixer_t const& mix_color ) const
 	{
 		color.red -= mix_color.red;
 		color.green -= mix_color.green;

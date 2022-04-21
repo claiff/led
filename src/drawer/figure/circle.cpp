@@ -8,8 +8,8 @@ namespace drawer::figure
 {
 	static constexpr uint8_t MAX_SIZE_CIRCLE = 3;
 
-	Circle::Circle( types::Vector const& position, uint8_t size,
-					types::Color const& color )
+	Circle::Circle( utils::Vector const& position, uint8_t size,
+					utils::Color const& color )
 			: mPosition( position )
 			, mSize((size < MAX_SIZE_CIRCLE) ? size : MAX_SIZE_CIRCLE )
 			, mColor( color )
@@ -21,28 +21,26 @@ namespace drawer::figure
 	//Public methods
 	//
 
-	void Circle::SetPosition( types::Vector const& position )
+	void Circle::SetPosition( utils::Vector const& position )
 	{
 		mPosition = position;
 	}
 
-	void Circle::SetColor( types::Color const& color )
+	void Circle::SetColor( utils::Color const& color )
 	{
 		mColor = color;
 	}
 
 	void Circle::Draw( device::LedMatrix& led_matrix )
 	{
-		Pixel_t line_color{mColor.red, mColor.green, mColor.blue};
-		effects::utils::Coordinate_t position{mPosition.x, mPosition.y};
 		//TODO FIX please it
 		for( uint8_t i = 0; i < mSize; ++i )
 		{
-			DrawLines( led_matrix, line_color, position, i );
+			DrawLines( led_matrix, mColor, mPosition, i );
 		}
 	}
 
-	void Circle::Move( types::Vector const& position )
+	void Circle::Move( utils::Vector const& position )
 	{
 		mPosition += position;
 	}
@@ -72,8 +70,8 @@ namespace drawer::figure
 		mPosition.y = -mSize;
 	}
 
-	void Circle::DrawLines( device::LedMatrix& led_matrix, const Pixel_t& line_color,
-							const effects::utils::Coordinate_t& position, uint8_t line ) const
+	void Circle::DrawLines( device::LedMatrix& led_matrix, utils::Color const& line_color,
+							utils::Vector const& position, uint8_t line ) const
 	{
 		for( uint8_t j = 0; j < mSize - line; ++j )
 		{

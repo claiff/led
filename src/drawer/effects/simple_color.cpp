@@ -11,7 +11,7 @@ namespace drawer::effects
 	//Constructor
 	//
 
-	SimpleColor::SimpleColor( Pixel_t const& color )
+	SimpleColor::SimpleColor( ::utils::Color const& color )
 			: mColor( color )
 	{
 

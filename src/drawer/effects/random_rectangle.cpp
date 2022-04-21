@@ -21,8 +21,8 @@ namespace drawer::effects
 
 	utils::Rectangle RandomRectangle::GetRandomRectangle() const
 	{
-		utils::Coordinate_t position{};
-		utils::Coordinate_t size{};
+		::utils::Vector position{};
+		::utils::Vector size{};
 
 		auto adc_data = mAdc.GetValue();
 		position.x = adc_data & 0x0F;
@@ -59,9 +59,9 @@ namespace drawer::effects
 		}
 	}
 
-	Pixel_t RandomRectangle::GetRandomColor() const
+	::utils::Color RandomRectangle::GetRandomColor() const
 	{
-		Pixel_t result;
+		::utils::Color result{};
 
 		auto adc_data = mAdc.GetValue();
 		result.red = adc_data & 0xFF;
@@ -71,7 +71,7 @@ namespace drawer::effects
 		return result;
 	}
 
-	void RandomRectangle::RestrictColor( Pixel_t& color, uint8_t max_color ) const
+	void RandomRectangle::RestrictColor( ::utils::Color& color, uint8_t max_color ) const
 	{
 		if( color.red > max_color )
 		{

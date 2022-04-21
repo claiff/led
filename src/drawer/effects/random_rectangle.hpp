@@ -5,8 +5,8 @@
 #pragma once
 
 #include "drawer/effects/types/ieffect.hpp"
-#include "utils/struct.hpp"
 #include "periphery/adc.hpp"
+#include "utils/color.hpp"
 
 namespace drawer::effects
 {
@@ -20,11 +20,11 @@ namespace drawer::effects
 		void Draw( device::LedMatrix& led_matrix ) const override;
 
 	private:
-		utils::Rectangle GetRandomRectangle() const;
-		Pixel_t GetRandomColor() const;
+		[[nodiscard]] utils::Rectangle GetRandomRectangle() const;
+		[[nodiscard]] ::utils::Color GetRandomColor() const;
 		void RestrictRectangle( device::LedMatrix const& led_matrix, utils::Rectangle& rectangle ) const;
-		void RestrictColor( Pixel_t& color, uint8_t max_color ) const;
-		uint16_t RestrictPartColor( float part_color, uint8_t max_color ) const;
+		void RestrictColor( ::utils::Color& color, uint8_t max_color ) const;
+		[[nodiscard]] uint16_t RestrictPartColor( float part_color, uint8_t max_color ) const;
 
 		periphery::Adc mAdc;
 

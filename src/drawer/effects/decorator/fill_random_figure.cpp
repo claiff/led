@@ -7,7 +7,7 @@
 namespace drawer::effects::decorator
 {
 
-	FillRandomFigure::FillRandomFigure( const Pixel_t& background_color )
+	FillRandomFigure::FillRandomFigure( ::utils::Color const& background_color )
 			: mBackgroundColor( background_color )
 	{
 
