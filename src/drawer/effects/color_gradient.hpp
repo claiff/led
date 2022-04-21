@@ -28,16 +28,17 @@ namespace drawer::effects
 			: public types::IEffect
 	{
 	public:
-		ColorGradient( Pixel_t const& pixel_start, Pixel_t const& pixel_end, GradientStyle gradient_style );
+		ColorGradient( ::utils::Color const& pixel_start, ::utils::Color const& pixel_end,
+					   GradientStyle gradient_style );
 		~ColorGradient() override = default;
 
 		void Draw( device::LedMatrix& led_matrix ) const override;
 	private:
 		PixelMixer_t GetColorMixer( uint8_t count_transitions ) const;
-		void MixColor( Pixel_t& color, PixelMixer_t const& mix_color ) const;
+		void MixColor( ::utils::Color& color, PixelMixer_t const& mix_color ) const;
 
-		Pixel_t mPixelStart{};
-		Pixel_t mPixelEnd{};
+		::utils::Color mPixelStart{};
+		::utils::Color mPixelEnd{};
 		GradientStyle mGradientStyle;
 	};
 

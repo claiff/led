@@ -8,6 +8,7 @@
 
 #include "rcc_helper.hpp"
 #include "utils/struct.hpp"
+#include "utils/color.hpp"
 
 namespace periphery
 {
@@ -23,7 +24,7 @@ namespace periphery
 		void StartPWM();
 		void StopPWM();
 		void SetDelay( uint8_t time_us );
-		void SetPixel( uint16_t number_pixel, Pixel_t const& pixel );
+		void SetPixel( uint16_t number_pixel, utils::Color const& pixel );
 		void DmaFullTransmitEvent();
 	private:
 		void InitPWMTimer( RccHelper& rcc );

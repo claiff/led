@@ -4,33 +4,11 @@
 
 #pragma once
 
-#include <cstdint>
-
 #include "device/led_matrix.hpp"
+#include "utils/vector.hpp"
 
 namespace drawer::figure::types
 {
-	struct Vector
-	{
-		int8_t x;
-		int8_t y;
-
-		void operator+=( Vector const& other )
-		{
-			x += other.x;
-			y += other.y;
-		}
-	};
-	using Vector = struct Vector;
-
-	struct Color
-	{
-		uint8_t red;
-		uint8_t green;
-		uint8_t blue;
-	};
-	using Color = struct Color;
-
 	enum class OutSide
 	{
 		NONE,
@@ -45,10 +23,10 @@ namespace drawer::figure::types
 	public:
 		virtual ~IFigure() = default;
 
-		virtual void SetPosition( Vector const& position ) = 0;
+		virtual void SetPosition( utils::Vector const& position ) = 0;
 
-		virtual void Move( Vector const& position ) = 0;
-		virtual void SetColor( Color const& color ) = 0;
+		virtual void Move( utils::Vector const& position ) = 0;
+		virtual void SetColor( utils::Color const& color ) = 0;
 		virtual void Draw( device::LedMatrix& led_matrix ) = 0;
 		virtual void ResetPositionX() = 0;
 		virtual void ResetPositionY() = 0;

@@ -5,7 +5,7 @@
 #pragma once
 
 #include "struct.hpp"
-
+#include "color.hpp"
 namespace utils
 {
 	class TimingsConverter
@@ -14,7 +14,7 @@ namespace utils
 		TimingsConverter() = default;
 		~TimingsConverter() = default;
 
-		static TimingColorFull_t Convert(Pixel_t const& pixel);
+		static TimingColorFull_t Convert(Color const& color);
 
 	private:
 		static Timing_Part_t ConvertPart( uint8_t color_part);

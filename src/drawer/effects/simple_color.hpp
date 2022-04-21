@@ -13,11 +13,11 @@ namespace drawer::effects
 			: public types::IEffect
 	{
 	public:
-		explicit SimpleColor( Pixel_t const& color );
+		explicit SimpleColor( ::utils::Color const& color );
 		~SimpleColor() override = default;
 
 		void Draw( device::LedMatrix& led_matrix ) const override;
 	protected:
-		Pixel_t mColor{};
+		::utils::Color mColor{};
 	};
 }

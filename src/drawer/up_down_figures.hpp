@@ -32,7 +32,7 @@ namespace drawer
 		};
 		using EffectType = struct EffectType;
 
-		UpDownFigures(  figure::types::Color const& background, device::LedMatrix const& led_matrix,
+		UpDownFigures( utils::Color const& background, device::LedMatrix const& led_matrix,
 					   effects::utils::Registrator < EffectType > const& registrator );
 		~UpDownFigures() override = default;
 
@@ -47,7 +47,7 @@ namespace drawer
 		void MoveFigure( figure::types::IFigurePtr const& figure );
 		void ReDrawFigures();
 
-		figure::types::Color mBackground;
+		utils::Color mBackground;
 		effects::utils::Registrator < EffectType > mRegistrator;
 		std::vector < State > mState;
 		device::LedMatrix mLedMatrix;

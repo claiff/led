@@ -76,7 +76,7 @@ namespace periphery
 		TIM2->ARR = time_us;
 	}
 
-	void PWM::SetPixel( uint16_t number_pixel, Pixel_t const& pixel )
+	void PWM::SetPixel( uint16_t number_pixel, utils::Color const& pixel )
 	{
 		if( number_pixel > mTimings.size() )
 		{

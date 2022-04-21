@@ -9,7 +9,6 @@
 
 //TODO Нужно сохранять цвет фона, для очистки его
 //TODO Нужно уметь заливать не только цвета но и градиент
-static const Pixel_t DEFAULT_PIXEL = {0x05, 0x00, 0x00};
 
 namespace device
 {
@@ -18,7 +17,6 @@ namespace device
 			, mHeight( count_column )
 	{
 		BuildPwm( rcc );
-		FillMatrix( DEFAULT_PIXEL );
 	}
 
 	LedMatrix::~LedMatrix()
@@ -31,7 +29,7 @@ namespace device
 		mPwm->StartPWM();
 	}
 
-	void LedMatrix::FillMatrix( Pixel_t const& color )
+	void LedMatrix::FillMatrix( utils::Color const& color )
 	{
 		for( auto i = 0; i < mWidth * mHeight; ++i )
 		{
@@ -39,16 +37,16 @@ namespace device
 		}
 	}
 
-	void LedMatrix::FillMatrix( Pixel_t const& color, uint8_t brightness )
+	void LedMatrix::FillMatrix( utils::Color const& color, uint8_t brightness )
 	{
-		Pixel_t brightned_color{};
+		utils::Color brightned_color{};
 
 		brightned_color = OnBrightColor( color, brightness );
 
 		FillMatrix( brightned_color );
 	}
 
-	void LedMatrix::FillRectangle( drawer::effects::utils::Rectangle const& rectangle, Pixel_t const& color,
+	void LedMatrix::FillRectangle( drawer::effects::utils::Rectangle const& rectangle, utils::Color const& color,
 								   uint8_t brightness )
 	{
 		auto position_x = rectangle.mPosition.x;
@@ -59,13 +57,13 @@ namespace device
 
 		for( uint8_t count_line = 0; count_line < width; ++count_line )
 		{
-			uint8_t x = position_x + count_line;
+			int8_t x = position_x + count_line;
 			DrawVerticalLine( {x, position_y}, height, brightned_color );
 		}
 		mPwm->StartPWM();
 	}
 
-	void LedMatrix::FillCircle( drawer::effects::utils::Circle const& circle, const Pixel_t& color )
+	void LedMatrix::FillCircle( drawer::effects::utils::Circle const& circle,  utils::Color const& color )
 	{
 		uint8_t start_x = 4;
 		uint8_t start_y = 4;
@@ -76,10 +74,10 @@ namespace device
 			auto y = sqrt( radius * radius - x * x );
 			uint8_t y_round = round( y );
 
-			uint8_t y_bottom = start_y - y_round;
-			uint8_t height = y_round * 2;
-			uint8_t x_ready = x + start_x;
-			uint8_t x_ready2 = start_x - x;
+			int8_t y_bottom = start_y - y_round;
+			int8_t height = y_round * 2;
+			int8_t x_ready = x + start_x;
+			int8_t x_ready2 = start_x - x;
 
 			DrawVerticalLine( {x_ready, y_bottom}, height, color );
 			DrawVerticalLine( {x_ready2, y_bottom}, height, color );
@@ -102,9 +100,9 @@ namespace device
 // Private methods
 //
 
-	Pixel_t LedMatrix::OnBrightColor( Pixel_t const& color, uint8_t brightness ) const
+	utils::Color LedMatrix::OnBrightColor( utils::Color const& color, uint8_t brightness ) const
 	{
-		Pixel_t result;
+		utils::Color result;
 		result.red = (color.red * brightness) >> 8;
 		result.green = (color.green * brightness) >> 8;
 		result.blue = (color.blue * brightness) >> 8;
@@ -120,7 +118,7 @@ namespace device
 	}
 
 	void
-	LedMatrix::DrawVerticalLine( drawer::effects::utils::Coordinate_t position, uint8_t height, Pixel_t const& color )
+	LedMatrix::DrawVerticalLine( utils::Vector position, uint8_t height, utils::Color const& color )
 	{
 		auto position_x = position.x;
 		auto position_y = position.y;
@@ -132,7 +130,7 @@ namespace device
 
 	}
 
-	void LedMatrix::DrawPixel( int8_t x, int8_t y, Pixel_t const& color )
+	void LedMatrix::DrawPixel( int8_t x, int8_t y, utils::Color const& color )
 	{
 		//FIXME Refactor
 		uint16_t number_led = 0;
@@ -152,7 +150,7 @@ namespace device
 		mPwm->SetPixel( number_led, color );
 	}
 
-	void LedMatrix::FillHorizontalLine( drawer::effects::utils::Coordinate_t position, Pixel_t const& line_color,
+	void LedMatrix::FillHorizontalLine( utils::Vector position, utils::Color const& line_color,
 										uint8_t width )
 	{
 		auto position_x = position.x;
@@ -165,7 +163,7 @@ namespace device
 	}
 
 	void
-	LedMatrix::FillOnBrightHorizontalLine( drawer::effects::utils::Coordinate_t position, const Pixel_t& line_color,
+	LedMatrix::FillOnBrightHorizontalLine( utils::Vector position, utils::Color const& line_color,
 										   uint8_t width )
 	{
 		static constexpr int BRIGHTNESS = 40;

@@ -103,6 +103,8 @@ set(PROJECT_SOURCES
         src/drawer/up_down_figures.cpp
         src/drawer/up_down_figures.hpp
         src/drawer/types/idrawer.hpp
+        src/utils/color.hpp
+        src/utils/vector.hpp
 
         ${STARTUP_DIR}/startup_stm32f103c8tx.s)
 

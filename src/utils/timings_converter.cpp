@@ -6,13 +6,13 @@
 
 namespace utils
 {
-	TimingColorFull_t utils::TimingsConverter::Convert( Pixel_t const& pixel )
+	TimingColorFull_t utils::TimingsConverter::Convert( Color const& color )
 	{
 		TimingColorFull_t result;
 
-		result.green = ConvertPart(pixel.green);
-		result.red = ConvertPart(pixel.red);
-		result.blue = ConvertPart(pixel.blue);
+		result.green = ConvertPart(color.green);
+		result.red = ConvertPart(color.red);
+		result.blue = ConvertPart(color.blue);
 		return result;
 	}
 

@@ -20,13 +20,5 @@ struct TimingColorFull
 };
 using TimingColorFull_t = TimingColorFull;
 
-struct Pixel
-{
-	uint8_t red;
-	uint8_t green;
-	uint8_t blue;
-};
-typedef struct Pixel Pixel_t;
-
 static constexpr uint8_t TOH = 5;
 static constexpr uint8_t T1H = 10;
