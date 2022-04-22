@@ -23,7 +23,7 @@ int main()
 	auto led_matrix = device::LedMatrix{16, 16, rcc};
 
 	auto registrator = GetRegistrator();
-	drawer::UpDownFigures up_down{ {0x00, 0x00, 0x10}, led_matrix, registrator};
+	drawer::UpDownFigures up_down{ blue, led_matrix, registrator};
 
 	while( true )
 	{
