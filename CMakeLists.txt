@@ -60,7 +60,6 @@ set(PROJECT_SOURCES
         ${SPECIFIC_DIR}/cmsis_gcc.h
         ${SPECIFIC_DIR}/system_stm32f1xx.h
 
-        ${UTILS_DIR}/struct.hpp
         ${UTILS_DIR}/timings_converter.cpp
         ${UTILS_DIR}/timings_converter.hpp
 

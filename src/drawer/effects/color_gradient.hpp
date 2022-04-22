@@ -5,7 +5,6 @@
 #pragma once
 
 #include "drawer/effects/types/ieffect.hpp"
-#include "utils/struct.hpp"
 
 namespace drawer::effects
 {
