@@ -4,34 +4,28 @@
 
 #pragma once
 
-#include <cstdint>
+#include "utils/vector.hpp"
 
 namespace drawer::effects::utils
 {
-	struct Coordinate_t
-	{
-		uint8_t x;
-		uint8_t y;
-	};
-
 	class Rectangle
 	{
 	public:
 		Rectangle( uint8_t x, uint8_t y, uint8_t width, uint8_t height );
-		Rectangle( Coordinate_t const& position, Coordinate_t const& size );
+		Rectangle( ::utils::Vector const& position, ::utils::Vector const& size );
 		~Rectangle() = default;
 
-		Coordinate_t mPosition;
-		Coordinate_t mSize;
+		::utils::Vector mPosition;
+		::utils::Vector mSize;
 	};
 
 	class Circle
 	{
 	public:
-		Circle( Coordinate_t const& position, uint8_t radius );
+		Circle( ::utils::Vector const& position, uint8_t radius );
 		~Circle() = default;
 
-		Coordinate_t mPosition;
+		::utils::Vector mPosition;
 		uint8_t mRadius;
 	};
 }

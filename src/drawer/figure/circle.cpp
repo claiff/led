@@ -6,22 +6,27 @@
 
 namespace drawer::figure
 {
+	static constexpr uint8_t MAX_SIZE_CIRCLE = 3;
 
-	Circle::Circle( types::Position const& position, uint8_t size,
-					types::Color const& color )
+	Circle::Circle( utils::Vector const& position, uint8_t size,
+					utils::Color const& color )
 			: mPosition( position )
-			, mSize((size < 2) ? size : 2 )
+			, mSize((size < MAX_SIZE_CIRCLE) ? size : MAX_SIZE_CIRCLE )
 			, mColor( color )
 	{
 
 	}
 
-	void Circle::SetPosition( types::Position const& position )
+	//
+	//Public methods
+	//
+
+	void Circle::SetPosition( utils::Vector const& position )
 	{
 		mPosition = position;
 	}
 
-	void Circle::SetColor( types::Color const& color )
+	void Circle::SetColor( utils::Color const& color )
 	{
 		mColor = color;
 	}
@@ -29,24 +34,80 @@ namespace drawer::figure
 	void Circle::Draw( device::LedMatrix& led_matrix )
 	{
 		//TODO FIX please it
-		effects::utils::Coordinate_t position{mPosition.x, mPosition.y};
-		Pixel_t line_color{mColor.red, mColor.green, mColor.blue};
+		for( uint8_t i = 0; i < mSize; ++i )
+		{
+			DrawLines( led_matrix, mColor, mPosition, i );
+		}
+	}
 
-		position.y -= mSize;
-		for( uint8_t i = 0; i <= mSize; ++i )
+	void Circle::Move( utils::Vector const& position )
+	{
+		mPosition += position;
+	}
+
+	types::OutSide Circle::IsFigureOut( device::LedMatrix const& led_matrix ) const
+	{
+		auto is_x_out = IsXOut( led_matrix );
+		if( is_x_out != types::OutSide::NONE )
 		{
-			led_matrix.FillHorizontalLine( position, line_color, 2 * i + 1 );
-			led_matrix.ReDraw();
-			position.y++;
-			position.x--;
+			return is_x_out;
 		}
-		position.x++;
-		for( auto i = mSize - 1; i >= 0; --i )
+		auto is_y_out = IsYOut( led_matrix );
+		if( is_y_out != types::OutSide::NONE )
 		{
-			position.x++;
-			led_matrix.FillHorizontalLine( position, line_color, 2 * i + 1 );
-			led_matrix.ReDraw();
-			position.y++;
+			return is_y_out;
 		}
+		return types::OutSide::NONE;
+	}
+
+	void Circle::ResetPositionX()
+	{
+		mPosition.x = -mSize;
+	}
+
+	void Circle::ResetPositionY()
+	{
+		mPosition.y = -mSize;
+	}
+
+	void Circle::DrawLines( device::LedMatrix& led_matrix, utils::Color const& line_color,
+							utils::Vector const& position, uint8_t line ) const
+	{
+		for( uint8_t j = 0; j < mSize - line; ++j )
+		{
+			led_matrix.DrawPixel( position.x - j, position.y + line, line_color );
+			led_matrix.DrawPixel( position.x + j, position.y + line, line_color );
+
+			led_matrix.DrawPixel( position.x - j, position.y - line, line_color );
+			led_matrix.DrawPixel( position.x + j, position.y - line, line_color );
+		}
+	}
+
+	types::OutSide Circle::IsYOut( device::LedMatrix const& led_matrix ) const
+	{
+		auto circle_height = mSize - 1;
+		if( mPosition.y + circle_height <= 0 )
+		{
+			return types::OutSide::UP;
+		}
+		else if( mPosition.y >= led_matrix.GetHeight() + circle_height  )
+		{
+			return types::OutSide::DOWN;
+		}
+		return types::OutSide::NONE;
+	}
+
+	types::OutSide Circle::IsXOut( device::LedMatrix const& led_matrix ) const
+	{
+		auto circle_width = 2 * mSize - 1;
+		if( mPosition.x + circle_width <= 0 )
+		{
+			return types::OutSide::LEFT;
+		}
+		else if( mPosition.x > led_matrix.GetWidth() + circle_width  )
+		{
+			return types::OutSide::RIGHT;
+		}
+		return types::OutSide::NONE;
 	}
 }

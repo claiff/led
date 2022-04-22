@@ -6,7 +6,6 @@
 
 #include "types/ifigure.hpp"
 #include "device/led_matrix.hpp"
-#include "utils/struct.hpp"
 
 namespace drawer::figure
 {
@@ -14,16 +13,27 @@ namespace drawer::figure
 			: public types::IFigure
 	{
 	public:
-		explicit Circle( types::Position const& position, uint8_t size,
-						 types::Color const& color );
+		Circle( utils::Vector const& position, uint8_t size,
+				utils::Color const& color );
 		~Circle() override = default;
 
-		void SetPosition( types::Position const& position ) override;
-		void SetColor( types::Color const& color ) override;
+		void SetPosition( utils::Vector const& position ) override;
+		void SetColor( utils::Color const& color ) override;
 		void Draw( device::LedMatrix& led_matrix ) override;
+		void Move( utils::Vector const& position ) override;
+		[[nodiscard]] types::OutSide IsFigureOut( device::LedMatrix const& led_matrix ) const override;
+		void ResetPositionX() override;
+		void ResetPositionY() override;
 	private:
-		types::Position mPosition;
+		[[nodiscard]] types::OutSide IsXOut( device::LedMatrix const& led_matrix ) const;
+		[[nodiscard]] types::OutSide IsYOut( device::LedMatrix const& led_matrix ) const;
+
+		utils::Vector mPosition;
 		uint8_t mSize;
-		types::Color mColor;
+		utils::Color mColor;
+
+		void DrawLines( device::LedMatrix& led_matrix, utils::Color const& line_color,
+						utils::Vector const& position,
+						uint8_t line ) const;
 	};
 }

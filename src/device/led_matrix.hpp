@@ -18,27 +18,27 @@ namespace device
 		~LedMatrix();
 
 		void ReDraw();
-		void FillMatrix( Pixel_t const& color );
-		void FillMatrix( Pixel_t const& color, uint8_t brightness );
+		void FillMatrix( utils::Color const& color );
+		void FillMatrix( utils::Color const& color, uint8_t brightness );
 
-		void FillRectangle( drawer::effects::utils::Rectangle const& rectangle, Pixel_t const& color,
+		void FillRectangle( drawer::effects::utils::Rectangle const& rectangle, utils::Color const& color,
 							uint8_t brightness );
-		void FillCircle( drawer::effects::utils::Circle const& circle, Pixel_t const& color );
+		void FillCircle( drawer::effects::utils::Circle const& circle, utils::Color const& color );
 
-		void DrawPixel( uint8_t x, uint8_t y, Pixel_t const& color );
+		void DrawPixel( int8_t x, int8_t y, utils::Color const& color );
 
-		uint8_t GetWidth() const;
-		uint8_t GetHeight() const;
+		[[nodiscard]] uint8_t GetWidth() const;
+		[[nodiscard]] uint8_t GetHeight() const;
 
-		void FillHorizontalLine( drawer::effects::utils::Coordinate_t position, const Pixel_t& line_color,
+		void FillHorizontalLine( utils::Vector position, const utils::Color& line_color,
 								 uint8_t width );
-		void FillOnBrightHorizontalLine( drawer::effects::utils::Coordinate_t position, const Pixel_t& line_color,
+		void FillOnBrightHorizontalLine( utils::Vector position, const utils::Color& line_color,
 										 uint8_t width );
 
 	private:
 		void BuildPwm( periphery::RccHelper& rcc );
-		void DrawVerticalLine( drawer::effects::utils::Coordinate_t position, uint8_t height, Pixel_t const& color );
-		Pixel_t OnBrightColor( Pixel_t const& color, uint8_t brightness ) const;
+		void DrawVerticalLine( utils::Vector position, uint8_t height, utils::Color const& color );
+		[[nodiscard]] utils::Color OnBrightColor( utils::Color const& color, uint8_t brightness ) const;
 
 		uint8_t mWidth;
 		uint8_t mHeight;

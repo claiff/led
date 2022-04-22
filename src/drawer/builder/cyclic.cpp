@@ -7,7 +7,7 @@
 
 namespace drawer::builder
 {
-	drawer::Cyclic Cyclic::Build( effects::utils::Registrator const& registrator, periphery::RccHelper& rcc, uint16_t time_ms )
+	drawer::Cyclic Cyclic::Build( effects::utils::Registrator< effects::types::IEffect* > const& registrator, periphery::RccHelper& rcc, uint16_t time_ms )
 	{
 		static constexpr uint8_t WIDTH = 16;
 		static constexpr uint8_t HEIGHT = 16;

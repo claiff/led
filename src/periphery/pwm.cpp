@@ -3,7 +3,7 @@
 //
 
 #include "pwm.hpp"
-#include "utils/timings_converter.hpp"
+
 
 static constexpr uint16_t DEFAULT_DELAY = 50;
 
@@ -76,14 +76,13 @@ namespace periphery
 		TIM2->ARR = time_us;
 	}
 
-	void PWM::SetPixel( uint16_t number_pixel, Pixel_t const& pixel )
+	void PWM::SetPixel( uint16_t number_pixel, utils::Color const& color )
 	{
-		if( number_pixel > mTimings.size() )
+		if( number_pixel > mTimings.size())
 		{
 			return;
 		}
-		auto data = utils::TimingsConverter::Convert( pixel );
-		mTimings[number_pixel] = data;
+		mTimings[number_pixel] = utils::TimingsConverter::Convert( color );
 	}
 
 	//
@@ -133,32 +132,17 @@ namespace periphery
 
 	uint16_t PWM::GetTimingsSize() const
 	{
-		return mTimings.size() * sizeof( TimingColorFull_t );
+		return mTimings.size() * sizeof( utils::TimingColorFull_t );
 	}
 
 	void PWM::InitTimings( uint16_t count_elements )
 	{
 		mTimings.reserve( count_elements );
 		mTimings.resize( count_elements );
-		auto default_timing = GetDefaultTiming();
+		auto default_timing = utils::TimingsConverter::GetDefaultTiming();
 		std::fill_n( mTimings.begin(), mTimings.size() - 1, default_timing );
 	}
 
-	TimingColorFull_t PWM::GetDefaultTiming() const
-	{
-		TimingColorFull_t result;
-		Timing_Part_t temp_part;
-
-		for( auto& bit: temp_part.bit )
-		{
-			bit = TOH;
-		}
-		result.blue = temp_part;
-		result.green = temp_part;
-		result.red = temp_part;
-
-		return result;
-	}
 
 	void PWM::DmaFullTransmitEvent()
 	{

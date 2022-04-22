@@ -4,15 +4,18 @@
 
 #include "timings_converter.hpp"
 
+static constexpr uint8_t TOH = 5;
+static constexpr uint8_t T1H = 10;
+
 namespace utils
 {
-	TimingColorFull_t utils::TimingsConverter::Convert( Pixel_t const& pixel )
+	TimingColorFull_t utils::TimingsConverter::Convert( Color const& color )
 	{
 		TimingColorFull_t result;
 
-		result.green = ConvertPart(pixel.green);
-		result.red = ConvertPart(pixel.red);
-		result.blue = ConvertPart(pixel.blue);
+		result.green = ConvertPart(color.green);
+		result.red = ConvertPart(color.red);
+		result.blue = ConvertPart(color.blue);
 		return result;
 	}
 
@@ -27,6 +30,22 @@ namespace utils
 			uint8_t convert_state = state ? T1H : TOH;
 			result.bit[i]= convert_state;
 		}
+		return result;
+	}
+
+	utils::TimingColorFull_t TimingsConverter::GetDefaultTiming()
+	{
+		utils::TimingColorFull_t result;
+		utils::Timing_Part_t temp_part;
+
+		for( auto& bit: temp_part.bit )
+		{
+			bit = TOH;
+		}
+		result.blue = temp_part;
+		result.green = temp_part;
+		result.red = temp_part;
+
 		return result;
 	}
 }

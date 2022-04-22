@@ -1,59 +1,63 @@
 #include "periphery/rcc_helper.hpp"
-#include "drawer/builder/cyclic.hpp"
-#include "drawer/effects/decorator/smoth_transition.hpp"
-#include "drawer/effects/decorator/fill_random_figure.hpp"
-#include "drawer/effects/utils/timer_policy.hpp"
-#include <memory>
+
 #include "drawer/figure/circle.hpp"
 
-void FillEffects( drawer::effects::utils::Registrator& registrator );
+#include "drawer/up_down_figures.hpp"
+#include "drawer/effects/utils/registrator.hpp"
 
-drawer::effects::types::IEffectPtr GetColorEffect( Pixel_t const& color_start, Pixel_t const& color_end );
+using Registrator_t = drawer::effects::utils::Registrator < drawer::UpDownFigures::EffectType >;
+
+Registrator_t GetRegistrator();
+drawer::UpDownFigures::EffectType
+GetEffect( uint16_t time_delay, uint16_t time_duration, uint8_t size, utils::Color const& color, utils::Vector const& position );
 
 int main()
 {
-	static constexpr uint16_t TIME_SWITCH_MS = 1000;
-
 	periphery::RccHelper rcc;
 	rcc.SetMaxRcc();
 
-	Pixel_t red = {0x10, 0x00, 0x00};
-	Pixel_t green = {0x00, 0x10, 0x00};
-	Pixel_t blue = {0x00, 0x00, 0x10};
+	utils::Color red = {0x10, 0x00, 0x00};
+	utils::Color green = {0x00, 0x10, 0x00};
+	utils::Color blue = {0x00, 0x00, 0x10};
 
 	auto led_matrix = device::LedMatrix{16, 16, rcc};
-	led_matrix.FillMatrix( blue );
-	led_matrix.ReDraw();
 
-	drawer::figure::Circle circle{{5,    5},
-								  {0x00, 100, 0x00}};
-	circle.Draw(led_matrix);
+	auto registrator = GetRegistrator();
+	drawer::UpDownFigures up_down{ blue, led_matrix, registrator};
 
 	while( true )
 	{
-
+		up_down.ReDraw();
 	}
 }
 
-void FillEffects( drawer::effects::utils::Registrator& registrator )
+Registrator_t GetRegistrator()
 {
-	Pixel_t red = {0x10, 0x00, 0x00};
-	Pixel_t green = {0x00, 0x10, 0x00};
-	Pixel_t blue = {0x00, 0x00, 0x10};
+	Registrator_t result;
+	utils::Color green = {0x00, 0x10, 0x00};
+	utils::Color red = {0x10, 0x00, 0x00};
 
-	registrator.Add( GetColorEffect( red, green ));
-	//registrator.Add( GetColorEffect( green, blue ));
-	//registrator.Add( GetColorEffect( blue, red ));
+	//TODO Время умножено на 2
+	auto effect = GetEffect( 300, 500, 3, green, {5, 0} );
+	result.Add( effect );
+	effect = GetEffect( 500, 50, 2, red, {9,0}  );
+	result.Add( effect );
+	effect = GetEffect( 500, 100, 1, red, {13,0}  );
+	result.Add( effect );
+	return result;
 }
 
-drawer::effects::types::IEffectPtr GetColorEffect( Pixel_t const& color_start, Pixel_t const& color_end )
+drawer::UpDownFigures::EffectType
+GetEffect( uint16_t time_delay, uint16_t time_duration, uint8_t size, utils::Color const& color, utils::Vector const& position )
 {
-	drawer::effects::utils::TimerPolicy timer_policy_main{500};
-	drawer::effects::utils::TimerPolicy timer_policy_trans{20};
+	using namespace drawer::effects::utils;
 
-	auto smooth_transition = new drawer::effects::decorator::SmoothTransition{timer_policy_main, timer_policy_trans};
-	auto color_gradient = std::make_shared < drawer::effects::decorator::FillRandomFigure >( color_start );
-	smooth_transition->Apply( color_gradient );
-	return smooth_transition;
+	auto circle = new drawer::figure::Circle{position, size, color};
+	circle->ResetPositionY();
+
+	TimerPolicy delay{time_delay};
+	TimerPolicy duration{time_duration};
+
+	return {delay, duration, circle};
 }
 

@@ -14,7 +14,9 @@ namespace drawer::builder
 		Cyclic() = default;
 		~Cyclic() = default;
 
-		drawer::Cyclic Build( effects::utils::Registrator const& registrator,periphery::RccHelper& rcc, uint16_t time_ms );
+		drawer::Cyclic
+		Build( effects::utils::Registrator < effects::types::IEffect* > const& registrator, periphery::RccHelper& rcc,
+			   uint16_t time_ms );
 	};
 
 }

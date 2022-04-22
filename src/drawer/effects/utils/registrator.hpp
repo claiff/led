@@ -10,17 +10,56 @@
 
 namespace drawer::effects::utils
 {
+	static constexpr uint8_t EMPTY_POSITION = 0;
+
+	template<typename T>
 	class Registrator
 	{
 	public:
-		Registrator();
-		~Registrator();
+		Registrator()
+				: mPosition( EMPTY_POSITION )
+		{
+		};
+		~Registrator()
+		{
+			mEffects.clear();
+		}
 
-		void Add( types::IEffectPtr const& effect );
-		types::IEffectPtr Get();
+		void Add( T const& effect )
+		{
+			mEffects.push_back( effect );
+		}
+
+		T& Get()
+		{
+			if( mEffects.empty())
+			{
+				//return {};
+			}
+			if( mPosition >= mEffects.size())
+			{
+				mPosition = 0;
+			}
+			return mEffects[mPosition++];
+		}
+
+		auto Begin()
+		{
+			return mEffects.begin();
+		}
+
+		auto End()
+		{
+			return mEffects.end();
+		}
+
+		[[nodiscard]] size_t Size() const
+		{
+			return mEffects.size();
+		}
 
 	private:
-		std::vector < types::IEffectPtr > mEffects;
+		std::vector < T > mEffects;
 		uint8_t mPosition;
 	};
 
