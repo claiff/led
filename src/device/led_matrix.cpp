@@ -5,7 +5,6 @@
 #include <cmath>
 
 #include "led_matrix.hpp"
-#include "utils/struct.hpp"
 
 //TODO Нужно сохранять цвет фона, для очистки его
 //TODO Нужно уметь заливать не только цвета но и градиент

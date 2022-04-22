@@ -6,7 +6,6 @@
 
 #include "types/ifigure.hpp"
 #include "device/led_matrix.hpp"
-#include "utils/struct.hpp"
 
 namespace drawer::figure
 {
